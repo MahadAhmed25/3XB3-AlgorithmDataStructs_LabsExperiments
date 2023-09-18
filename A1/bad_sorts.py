@@ -77,35 +77,27 @@ def experiment(n):
         total2 = 0
         total3 = 0
 
-        numberOfElements = 1000
+        numberOfElements = 10
         randomList = create_random_list(numberOfElements, 10000)
 
         start = timeit.default_timer()
         bubble_sort(randomList)
         total1 += timeit.default_timer() - start
-        if n>1:
-            print("Bubble sort -- listLength: ", numberOfElements, " time: ", total1/n, "sec")
-        else:
-            print("Bubble sort -- listLength: ", numberOfElements, " time: ", total1, "sec")
 
         start = timeit.default_timer()
         selection_sort(randomList)
         total2 += timeit.default_timer() - start
-        if n>1:
-            print("Selection sort -- listLength: ", numberOfElements, " time: ", total2/n, "sec")
-        else:
-            print("Selection sort -- listLength: ", numberOfElements, " time: ", total2, "sec")
 
         start = timeit.default_timer()
         insertion_sort(randomList)
         total3 += timeit.default_timer() - start
-        if n>1:
-            print("Insertion sort -- listLength: ", numberOfElements, " time: ", total2/n, "sec")
-        else:
-            print("Insertion sort -- listLength: ", numberOfElements, " time: ", total2, "sec")
+    
+    print("Bubble sort -- listLength: ", numberOfElements, " time: ", total1/n, "sec")
+    print("Selection sort -- listLength: ", numberOfElements, " time: ", total2/n, "sec")
+    print("Insertion sort -- listLength: ", numberOfElements, " time: ", total3/n, "sec")
 
 def main():
     experiment(1);
-    experiment(100);
+    # experiment(100);
 
 main()
