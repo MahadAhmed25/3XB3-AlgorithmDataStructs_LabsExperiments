@@ -68,3 +68,24 @@ def find_min_index(L, n):
         if L[i] < L[min_index]:
             min_index = i
     return min_index
+
+def main():
+    numberOfElements = 100000000000
+    randomList = create_random_list(numberOfElements, 2000000000)
+
+    t0 = time.time()
+    bubble_sort(randomList)
+    t1 = time.time()
+    print("Bubble sort    -- listLength: ", numberOfElements, "        time: ", t1-t0)
+
+    t0 = time.time()
+    selection_sort(randomList)
+    t1 = time.time()
+    print("Selection sort -- listLength: ", numberOfElements, "        time: ", t1-t0)
+
+    t0 = time.time()
+    insertion_sort(randomList)
+    t1 = time.time()
+    print("Insertion sort -- listLength: ", numberOfElements, "        time: ", t1-t0)
+
+main()
