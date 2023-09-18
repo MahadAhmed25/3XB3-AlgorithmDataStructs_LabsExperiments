@@ -3,6 +3,8 @@ This file corresponds to the first graded lab of 2XC3.
 Feel free to modify and/or add functions to this file.
 """
 import random
+import time
+import timeit
 
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
@@ -69,23 +71,41 @@ def find_min_index(L, n):
             min_index = i
     return min_index
 
+def experiment(n):
+    for i in range(n):
+        total1 = 0
+        total2 = 0
+        total3 = 0
+
+        numberOfElements = 1000
+        randomList = create_random_list(numberOfElements, 10000)
+
+        start = timeit.default_timer()
+        bubble_sort(randomList)
+        total1 += timeit.default_timer() - start
+        if n>1:
+            print("Bubble sort -- listLength: ", numberOfElements, " time: ", total1/n, "sec")
+        else:
+            print("Bubble sort -- listLength: ", numberOfElements, " time: ", total1, "sec")
+
+        start = timeit.default_timer()
+        selection_sort(randomList)
+        total2 += timeit.default_timer() - start
+        if n>1:
+            print("Selection sort -- listLength: ", numberOfElements, " time: ", total2/n, "sec")
+        else:
+            print("Selection sort -- listLength: ", numberOfElements, " time: ", total2, "sec")
+
+        start = timeit.default_timer()
+        insertion_sort(randomList)
+        total3 += timeit.default_timer() - start
+        if n>1:
+            print("Insertion sort -- listLength: ", numberOfElements, " time: ", total2/n, "sec")
+        else:
+            print("Insertion sort -- listLength: ", numberOfElements, " time: ", total2, "sec")
+
 def main():
-    numberOfElements = 100000000000
-    randomList = create_random_list(numberOfElements, 2000000000)
-
-    t0 = time.time()
-    bubble_sort(randomList)
-    t1 = time.time()
-    print("Bubble sort    -- listLength: ", numberOfElements, "        time: ", t1-t0)
-
-    t0 = time.time()
-    selection_sort(randomList)
-    t1 = time.time()
-    print("Selection sort -- listLength: ", numberOfElements, "        time: ", t1-t0)
-
-    t0 = time.time()
-    insertion_sort(randomList)
-    t1 = time.time()
-    print("Insertion sort -- listLength: ", numberOfElements, "        time: ", t1-t0)
+    experiment(1);
+    experiment(100);
 
 main()
