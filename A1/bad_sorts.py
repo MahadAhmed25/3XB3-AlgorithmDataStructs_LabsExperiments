@@ -71,13 +71,11 @@ def find_min_index(L, n):
             min_index = i
     return min_index
 
-def experiment(n):
-    for i in range(n):
-        total1 = 0
-        total2 = 0
-        total3 = 0
-
-        numberOfElements = 10
+def experiment(numberOfRuns, numberOfElements):
+    total1 = 0
+    total2 = 0
+    total3 = 0
+    for i in range(numberOfRuns):
         randomList = create_random_list(numberOfElements, 10000)
 
         start = timeit.default_timer()
@@ -92,12 +90,25 @@ def experiment(n):
         insertion_sort(randomList)
         total3 += timeit.default_timer() - start
     
-    print("Bubble sort -- listLength: ", numberOfElements, " time: ", total1/n, "sec")
-    print("Selection sort -- listLength: ", numberOfElements, " time: ", total2/n, "sec")
-    print("Insertion sort -- listLength: ", numberOfElements, " time: ", total3/n, "sec")
+    print("Bubble sort -- listLength: ", numberOfElements, " time: ", total1/numberOfRuns, "sec")
+    print("Selection sort -- listLength: ", numberOfElements, " time: ", total2/numberOfRuns, "sec")
+    print("Insertion sort -- listLength: ", numberOfElements, " time: ", total3/numberOfRuns, "sec")
+    print("================================================================")
 
 def main():
-    experiment(1);
-    # experiment(100);
+    experiment(1,10)
+    experiment(1,100)
+    experiment(1,1000)
+    experiment(1,10000)
+
+    experiment(10,10)
+    experiment(10,100)
+    experiment(10,1000)
+    experiment(10,10000)
+
+    experiment(100,10)
+    experiment(100,100)
+    experiment(100,1000)
+    experiment(100,10000)
 
 main()
