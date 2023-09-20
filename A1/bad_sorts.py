@@ -124,14 +124,20 @@ def main():
     plt.plot(s, y)
     plt.plot(i, y)
 
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Length of List')
+    ax.set_title('List length vs Time Displaying for single run')
+
     experiment(10,10)
     experiment(10,100)
     experiment(10,1000)
+    experiment(10,5000)
     experiment(10,10000)
 
     experiment(100,10)
     experiment(100,100)
     experiment(100,1000)
+    experiment(100,5000)
     experiment(100,10000)
 
     plt.show()
