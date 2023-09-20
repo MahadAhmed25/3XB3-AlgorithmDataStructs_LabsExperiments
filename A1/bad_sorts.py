@@ -45,6 +45,24 @@ def insert(L, i):
             i -= 1
         else:
             return
+        
+# ******************* Insertion sort code VARIATION 1 *******************
+
+def insertion_sort2(L):
+    for i in range(1, len(L)):
+        print(L)
+        insert2(L, i)
+
+def insert2(L, i):
+    current_element = L[i]
+    j = i - 1
+
+    while j >= 0 and L[j] > current_element:
+        L[j + 1] = L[j]
+        j -= 1
+
+    L[j + 1] = current_element
+
 
 
 # ******************* Bubble sort code *******************
@@ -102,13 +120,13 @@ def experiment(numberOfRuns, numberOfElements):
     print("================================================================")
     return x1,x2,x3
 
-def main():
+def run_experiment1():
 
-    b1,s1,i1 = experiment(1,10)
-    b2,s2,i2 = experiment(1,100)
-    b3,s3,i3 = experiment(1,1000)
-    b4,s4,i4 = experiment(1,5000)
-    b5,s5,i5 = experiment(1,10000)
+    b1,s1,i1 = experiment(100,10)
+    b2,s2,i2 = experiment(100,100)
+    b3,s3,i3 = experiment(100,1000)
+    b4,s4,i4 = experiment(100,5000)
+    b5,s5,i5 = experiment(100,10000)
 
     b=[b1,b2,b3,b4,b5]
     s=[s1,s2,s3,s4,s5]
@@ -116,30 +134,36 @@ def main():
     y=[10,100,1000,5000,10000]
 
     fig, ax = plt.subplots()
-    ax.scatter(b, y, label='Dataset 1')
-    ax.scatter(s, y, label='Dataset 2', color='r')
-    ax.scatter(i, y, label='Dataset 2', color='g')
+    ax.scatter(b, y)
+    ax.scatter(s, y, color='r')
+    ax.scatter(i, y, color='g')
 
-    plt.plot(b, y)
-    plt.plot(s, y)
-    plt.plot(i, y)
+    plt.plot(b, y, label = "bubble sort")
+    plt.plot(s, y, label = "selection sort")
+    plt.plot(i, y, label = "insertion sort")
 
     ax.set_xlabel('Time (seconds)')
     ax.set_ylabel('Length of List')
-    ax.set_title('List length vs Time Displaying for single run')
+    ax.legend()
+    ax.set_title('List length vs Time Displaying for ten runs')
 
-    experiment(10,10)
-    experiment(10,100)
-    experiment(10,1000)
-    experiment(10,5000)
-    experiment(10,10000)
+    # experiment(10,10)
+    # experiment(10,100)
+    # experiment(10,1000)
+    # experiment(10,5000)
+    # experiment(10,10000)
 
-    experiment(100,10)
-    experiment(100,100)
-    experiment(100,1000)
-    experiment(100,5000)
-    experiment(100,10000)
+    # experiment(100,10)
+    # experiment(100,100)
+    # experiment(100,1000)
+    # experiment(100,5000)
+    # experiment(100,10000)
 
     plt.show()
+
+def main():
+
+    L = [7, 2, 5, 9, 1, 4, 3, 6, 8]
+    insertion_sort2(L)
 
 main()
