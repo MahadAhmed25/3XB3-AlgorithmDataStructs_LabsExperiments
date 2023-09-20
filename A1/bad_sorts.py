@@ -5,6 +5,8 @@ Feel free to modify and/or add functions to this file.
 import random
 import time
 import timeit
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
@@ -90,16 +92,37 @@ def experiment(numberOfRuns, numberOfElements):
         insertion_sort(randomList)
         total3 += timeit.default_timer() - start
     
-    print("Bubble sort -- listLength: ", numberOfElements, " time: ", total1/numberOfRuns, "sec")
-    print("Selection sort -- listLength: ", numberOfElements, " time: ", total2/numberOfRuns, "sec")
-    print("Insertion sort -- listLength: ", numberOfElements, " time: ", total3/numberOfRuns, "sec")
+    x1=total1/numberOfRuns
+    x2= total2/numberOfRuns
+    x3= total3/numberOfRuns
+    
+    print("Bubble sort -- listLength: ", numberOfElements, " time: ", x1, "sec")
+    print("Selection sort -- listLength: ", numberOfElements, " time: ", x2, "sec")
+    print("Insertion sort -- listLength: ", numberOfElements, " time: ", x3, "sec")
     print("================================================================")
+    return x1,x2,x3
 
 def main():
-    experiment(1,10)
-    experiment(1,100)
-    experiment(1,1000)
-    experiment(1,10000)
+
+    b1,s1,i1 = experiment(1,10)
+    b2,s2,i2 = experiment(1,100)
+    b3,s3,i3 = experiment(1,1000)
+    b4,s4,i4 = experiment(1,5000)
+    b5,s5,i5 = experiment(1,10000)
+
+    b=[b1,b2,b3,b4,b5]
+    s=[s1,s2,s3,s4,s5]
+    i=[i1,i2,i3,i4,i5]
+    y=[10,100,1000,5000,10000]
+
+    fig, ax = plt.subplots()
+    ax.scatter(b, y, label='Dataset 1')
+    ax.scatter(s, y, label='Dataset 2', color='r')
+    ax.scatter(i, y, label='Dataset 2', color='g')
+
+    plt.plot(b, y)
+    plt.plot(s, y)
+    plt.plot(i, y)
 
     experiment(10,10)
     experiment(10,100)
@@ -110,5 +133,7 @@ def main():
     experiment(100,100)
     experiment(100,1000)
     experiment(100,10000)
+
+    plt.show()
 
 main()
