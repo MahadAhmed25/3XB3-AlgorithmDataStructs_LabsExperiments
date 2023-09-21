@@ -46,22 +46,24 @@ def insert(L, i):
         else:
             return
         
-# ******************* Insertion sort code VARIATION 1 *******************
+# ******************* Insertion sort code VARIATION 2 *******************
 
 def insertion_sort2(L):
     for i in range(1, len(L)):
-        print(L)
         insert2(L, i)
 
 def insert2(L, i):
     current_element = L[i]
     j = i - 1
-
-    while j >= 0 and L[j] > current_element:
-        L[j + 1] = L[j]
-        j -= 1
-
-    L[j + 1] = current_element
+    
+    while j >= 0:
+        if L[j] > current_element:
+            L[j+1] = L[j]
+            j -=1
+        else:
+            break
+      
+    L[j + 1] = current_element  
 
 
 
@@ -73,7 +75,27 @@ def bubble_sort(L):
         for j in range(len(L) - 1):
             if L[j] > L[j+1]:
                 swap(L, j, j+1)
+                
+# ******************* Bubble sort code VARIATION 2 *******************
 
+def bubble_sort2(L):
+    n = len(L)
+    
+    for i in range(n):
+        swapped = False
+        
+        for j in range(0, n-i-1):
+            if L[j] > L[j+1]:
+                # Swap elements using a temporary variable
+                temp = L[j]
+                L[j] = L[j+1]
+                L[j+1] = temp
+                print(L)
+                swapped = True
+        
+        # If no swapping occurred in this pass, the list is already sorted
+        if not swapped:
+            break
 
 # ******************* Selection sort code *******************
 
@@ -164,6 +186,7 @@ def run_experiment1():
 def main():
 
     L = [7, 2, 5, 9, 1, 4, 3, 6, 8]
-    insertion_sort2(L)
+    bubble_sort2(L)
+    print("final   ", L)
 
 main()
