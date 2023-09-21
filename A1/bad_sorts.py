@@ -113,6 +113,30 @@ def find_min_index(L, n):
             min_index = i
     return min_index
 
+# ******************* Selection sort code VARIATION 2 *******************
+
+def selection_sort2(L):
+    for i in range(len(L) // 2):
+        min_index, max_index = find_min_max_indices(L, i, len(L) - i - 1)
+        swap(L, i, min_index)
+
+        if max_index == i:
+            max_index = min_index
+        swap(L, len(L) - i - 1, max_index)
+
+def find_min_max_indices(L, start, end):
+    min_index = start
+    max_index = start
+    
+    for i in range(start, end + 1):
+        if L[i] < L[min_index]:
+            min_index = i
+        elif L[i] > L[max_index]:
+            max_index = i
+            
+    return min_index, max_index
+
+
 def experiment(numberOfRuns, numberOfElements):
     total1 = 0
     total2 = 0
@@ -186,7 +210,9 @@ def run_experiment1():
 def main():
 
     L = [7, 2, 5, 9, 1, 4, 3, 6, 8]
-    bubble_sort2(L)
+    # bubble_sort2(L)
+    selection_sort2(L)
+
     print("final   ", L)
 
 main()
