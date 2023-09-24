@@ -267,7 +267,7 @@ def experiment2(numberOfRuns, numberOfElements):
 
 def main():
 
-    L = [7, 2, 5, 9, 1, 4, 3, 6]
+    L = [7, 2, 5, 9, 1, 4, 3, 6,8,10,9]
     print(bubble_sort2(L))
     #selection_sort2(L)
 

@@ -186,11 +186,11 @@ def experiment(numberOfRuns, numberOfElements):
 
 def run_experiment2():
 
-    q1,m1,h1 = experiment(100,10)
-    q2,m2,h2 = experiment(100,100)
-    q3,m3,h3 = experiment(100,1000)
-    q4,m4,h4 = experiment(100,5000)
-    q5,m5,h5 = experiment(100,10000)
+    q1,m1,h1 = experiment(10,10)
+    q2,m2,h2 = experiment(10,100)
+    q3,m3,h3 = experiment(10,1000)
+    q4,m4,h4 = experiment(10,5000)
+    q5,m5,h5 = experiment(10,10000)
 
     q=[q1,q2,q3,q4,q5]
     m=[m1,m2,m3,m4,m5]
@@ -209,7 +209,7 @@ def run_experiment2():
     ax.set_xlabel('Time (seconds)')
     ax.set_ylabel('Length of List')
     ax.legend()
-    ax.set_title('List length vs Time Displaying for ten runs')
+    ax.set_title('List length vs Time Displaying for 10 runs of "Good Sort"')
 
 
     plt.show()
