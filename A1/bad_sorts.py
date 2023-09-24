@@ -52,18 +52,17 @@ def insertion_sort2(L):
     for i in range(1, len(L)):
         insert2(L, i)
 
+
 def insert2(L, i):
-    current_element = L[i]
-    j = i - 1
-    
-    while j >= 0:
-        if L[j] > current_element:
-            L[j+1] = L[j]
-            j -=1
+    value = L[i]
+    while i > 0:
+        if L[i - 1] > value:
+            L[i] = L[i - 1]
+            i -= 1
         else:
-            break
-      
-    L[j + 1] = current_element  
+            L[i] = value
+            return
+    L[0] = value 
 
 
 
@@ -118,34 +117,14 @@ def selection_sort2(L):
             swap(L, i, min_index)
         swap(L, len(L) - i - 1, max_index)
 
-# def selection_sort2(L):
-#     for i in range(len(L) // 2):
-#         min_index, max_index = find_min_max_indices(L, i, len(L) - i - 1)
-#         swap(L, i, min_index)
-
-#         if max_index == i:
-#             max_index = min_index
-#         swap(L, len(L) - i - 1, max_index)
-
-# def find_min_max_indices(L, start, end):
-#     min_index = start
-#     max_index = start
-    
-#     for i in range(start, end + 1):
-#         if L[i] < L[min_index]:
-#             min_index = i
-#         elif L[i] > L[max_index]:
-#             max_index = i
-            
-#     return min_index, max_index
-
 
 def experiment1(numberOfRuns, numberOfElements):
     total1 = 0
     total2 = 0
     total3 = 0
-    for i in range(numberOfRuns):
-        randomList = create_random_list(numberOfElements, 10000)
+    maxValue = 10000
+    for _ in range(numberOfRuns):
+        randomList = create_random_list(numberOfElements, maxValue)
 
         start = timeit.default_timer()
         bubble_sort(randomList)
@@ -170,7 +149,6 @@ def experiment1(numberOfRuns, numberOfElements):
     return x1,x2,x3
 
 def run_experiment1():
-
     b1,s1,i1 = experiment1(100,10)
     b2,s2,i2 = experiment1(100,100)
     b3,s3,i3 = experiment1(100,1000)
@@ -212,65 +190,109 @@ def run_experiment1():
 
 
 def experiment2(numberOfRuns, numberOfElements):
-    total1 = 0
-    total2 = 0
-    total3 = 0
+    maxValue = 10000
+    total_bubble = 0
+    total_selection = 0
+    total_insertion = 0
 
-    total1_variation = 0
-    total2_variation = 0
-    total3_variation = 0
-    for i in range(numberOfRuns):
-        randomList = create_random_list(numberOfElements, 10000)
+    total_bubble_variation = 0
+    total_selection_variation = 0
+    total_insertion_variation = 0
+
+    for _ in range(numberOfRuns):
+        randomList = create_random_list(numberOfElements, maxValue)
 
         start = timeit.default_timer()
         bubble_sort(randomList)
-        total1 += timeit.default_timer() - start
-
-        start = timeit.default_timer()
-        selection_sort(randomList)
-        total2 += timeit.default_timer() - start
-
-        start = timeit.default_timer()
-        insertion_sort(randomList)
-        total3 += timeit.default_timer() - start
-
+        total_bubble += timeit.default_timer() - start
 
         start = timeit.default_timer()
         bubble_sort2(randomList)
-        total1_variation += timeit.default_timer() - start
+        total_bubble_variation += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        selection_sort(randomList)
+        total_selection += timeit.default_timer() - start
 
         start = timeit.default_timer()
         selection_sort2(randomList)
-        total2_variation += timeit.default_timer() - start
+        total_selection_variation += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        insertion_sort(randomList)
+        total_insertion += timeit.default_timer() - start
 
         start = timeit.default_timer()
         insertion_sort2(randomList)
-        total3_variation += timeit.default_timer() - start
+        total_insertion_variation += timeit.default_timer() - start
     
-    x1=total1/numberOfRuns
-    x2= total2/numberOfRuns
-    x3= total3/numberOfRuns
+    x_bubble = total_bubble/numberOfRuns
+    x_selection = total_selection/numberOfRuns
+    x_insertion = total_insertion/numberOfRuns
 
-    x1_variation =total1_variation/numberOfRuns
-    x2_variation = total2_variation/numberOfRuns
-    x3_variation = total3_variation/numberOfRuns
+    x_bubble_variation =total_bubble_variation/numberOfRuns
+    x_selection_variation = total_selection_variation/numberOfRuns
+    x_insertion_variation = total_insertion_variation/numberOfRuns
     
-    print("Bubble sort -- listLength: ", numberOfElements, " time: ", x1, "sec")
-    print("Selection sort -- listLength: ", numberOfElements, " time: ", x2, "sec")
-    print("Insertion sort -- listLength: ", numberOfElements, " time: ", x3, "sec")
+    print("Bubble sort -- listLength: ", numberOfElements, " time: ", x_bubble, "sec")
+    print("Bubble sort variation-- listLength: ", numberOfElements, " time: ", x_bubble_variation, "sec")
+
     print("------------------------------------------------------------------")
-    print("Bubble sort variation-- listLength: ", numberOfElements, " time: ", x1_variation, "sec")
-    print("Selection sort variation -- listLength: ", numberOfElements, " time: ", x2_variation, "sec")
-    print("Insertion sort variation -- listLength: ", numberOfElements, " time: ", x3_variation, "sec")
+    
+    print("Selection sort -- listLength: ", numberOfElements, " time: ", x_selection, "sec")
+    print("Selection sort variation -- listLength: ", numberOfElements, " time: ", x_selection_variation, "sec")
+    
+    print("------------------------------------------------------------------")
+
+    print("Insertion sort -- listLength: ", numberOfElements, " time: ", x_insertion, "sec")
+    print("Insertion sort variation -- listLength: ", numberOfElements, " time: ", x_insertion_variation, "sec")
     print("================================================================")
-    return x1,x2,x3, x1_variation, x2_variation, x3_variation
+    
+    # return x_bubble, x_bubble_variation
+
+    return x_bubble, x_selection, x_insertion, x_bubble_variation, x_selection_variation, x_insertion_variation
+
+def run_experiment2():
+
+    # b1,s1,i1, b_variation1, s_variation1, i_variation1  = experiment2(1,10)
+    # b2,s2,i2, b_variation2, s_variation2, i_variation2 = experiment2(1,100)
+    # b3,s3,i3, b_variation3, s_variation3, i_variation3 = experiment2(1,1000)
+    # b4,s4,i4, b_variation4, s_variation4, i_variation4 = experiment2(1,5000)
+    # b5,s5,i5, b_variation5, s_variation5, i_variation5 = experiment2(1,10000)
+
+    # b=[b1,b2,b3,b4,b5]
+    # b_variation = [b_variation1, b_variation2, b_variation3, b_variation4, b_variation5]
+    # s=[s1,s2,s3,s4,s5]
+    # s_variation=[s_variation1, s_variation2, s_variation3, s_variation4, s_variation5]
+    # i=[i1,i2,i3,i4,i5]
+    # i_variation=[i_variation1, i_variation2, i_variation3, i_variation4, i_variation5]
+    
+    # y=[10,100,1000,5000,10000]
+
+    # fig, ax = plt.subplots()
+    # ax.scatter(b, y)
+    # ax.scatter(s, y, color='r')
+    # ax.scatter(i, y, color='g')
+
+    # plt.plot(b, y, label = "bubble sort")
+    # plt.plot(s, y, label = "selection sort")
+    # plt.plot(i, y, label = "insertion sort")
+
+    # ax.set_xlabel('Time (seconds)')
+    # ax.set_ylabel('Length of List')
+    # ax.legend()
+    # ax.set_title('List length vs Time Displaying for ten runs')
+
+    print("====================================RESULTS============================")
+    
+    experiment2(10,10)
+    experiment2(10,100)
+    experiment2(10,1000)
+    experiment2(10,5000)
+    experiment2(10,10000)
+
 
 def main():
-
-    L = [7, 2, 5, 9, 1, 4, 3, 6,8,10,9]
-    print(bubble_sort2(L))
-    #selection_sort2(L)
-
-    print("final   ", L)
+    run_experiment2()
 
 main()
