@@ -80,12 +80,13 @@ def bubble_sort(L):
 def bubble_sort2(L):
     for i in range(len(L)):
         value = L[0]
-        for j in range(len(L) - 1):
+        for j in range(len(L) - i- 1):
             if value > L[j + 1]:
                 L[j] = L[j + 1]
             else:
                 L[j] = value
                 value = L[j+1]
+        L[-i-1] = value
 
 # ******************* Selection sort code *******************
 
@@ -128,13 +129,14 @@ def experiment1(numberOfRuns, numberOfElements):
     for _ in range(numberOfRuns):
         randomList = create_random_list(numberOfElements, maxValue)
 
-        start = timeit.default_timer()
-        bubble_sort(randomList)
-        total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
         selection_sort(randomList)
         total2 += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        bubble_sort(randomList)
+        total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
         insertion_sort(randomList)
@@ -144,49 +146,37 @@ def experiment1(numberOfRuns, numberOfElements):
     x2= total2/numberOfRuns
     x3= total3/numberOfRuns
     
-    print("Bubble sort -- listLength: ", numberOfElements, " time: ", x1, "sec")
-    print("Selection sort -- listLength: ", numberOfElements, " time: ", x2, "sec")
-    print("Insertion sort -- listLength: ", numberOfElements, " time: ", x3, "sec")
+    print("Bubble sort -- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x1, "sec")
+    print("Selection sort -- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x2, "sec")
+    print("Insertion sort -- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x3, "sec")
     print("================================================================")
     return x1,x2,x3
 
-def run_experiment1():
-    b1,s1,i1 = experiment1(100,10)
-    b2,s2,i2 = experiment1(100,100)
-    b3,s3,i3 = experiment1(100,1000)
-    b4,s4,i4 = experiment1(100,5000)
-    b5,s5,i5 = experiment1(100,10000)
+def graph_experiment1():
+    b1,s1,i1 = experiment1(10,10)
+    b2,s2,i2 = experiment1(10,100)
+    b3,s3,i3 = experiment1(10,1000)
+    b4,s4,i4 = experiment1(10,3000)
+    b5,s5,i5 = experiment1(10,5000)
 
     b=[b1,b2,b3,b4,b5]
     s=[s1,s2,s3,s4,s5]
     i=[i1,i2,i3,i4,i5]
-    y=[10,100,1000,5000,10000]
+    x=[10,100,1000,3000,5000]
 
     fig, ax = plt.subplots()
-    ax.scatter(b, y)
-    ax.scatter(s, y, color='r')
-    ax.scatter(i, y, color='g')
+    ax.scatter(x, b)
+    ax.scatter(x, s, color='r')
+    ax.scatter(x, i, color='g')
 
-    plt.plot(b, y, label = "bubble sort")
-    plt.plot(s, y, label = "selection sort")
-    plt.plot(i, y, label = "insertion sort")
+    plt.plot(x, b, label = "bubble sort")
+    plt.plot(x, s, label = "selection sort")
+    plt.plot(x, i, label = "insertion sort")
 
-    ax.set_xlabel('Time (seconds)')
-    ax.set_ylabel('Length of List')
+    ax.set_ylabel('Time (seconds)')
+    ax.set_xlabel('Length of List')
     ax.legend()
-    ax.set_title('List length vs Time Displaying for ten runs')
-
-    # experiment1(10,10)
-    # experiment1(10,100)
-    # experiment1(10,1000)
-    # experiment1(10,5000)
-    # experiment1(10,10000)
-
-    # experiment1(100,10)
-    # experiment1(100,100)
-    # experiment1(100,1000)
-    # experiment1(100,5000)
-    # experiment1(100,10000)
+    ax.set_title('List length vs Time for 10 runs')
 
     plt.show()
 
@@ -255,135 +245,43 @@ def experiment2(numberOfRuns, numberOfElements):
 
     return x_bubble, x_selection, x_insertion, x_bubble_variation, x_selection_variation, x_insertion_variation
 
-def run_experiment2():
-
-    b1,s1,i1, b_variation1, s_variation1, i_variation1  = experiment2(1,10)
-    b2,s2,i2, b_variation2, s_variation2, i_variation2 = experiment2(1,100)
-    b3,s3,i3, b_variation3, s_variation3, i_variation3 = experiment2(1,1000)
-    b4,s4,i4, b_variation4, s_variation4, i_variation4 = experiment2(1,5000)
-    b5,s5,i5, b_variation5, s_variation5, i_variation5 = experiment2(1,10000)
-
-    b=[b1,b2,b3,b4,b5]
-    b_variation = [b_variation1, b_variation2, b_variation3, b_variation4, b_variation5]
-    s=[s1,s2,s3,s4,s5]
-    s_variation=[s_variation1, s_variation2, s_variation3, s_variation4, s_variation5]
-    i=[i1,i2,i3,i4,i5]
-    i_variation=[i_variation1, i_variation2, i_variation3, i_variation4, i_variation5]
+def graph_experiment2():
+    b1,s1,i1,bv1,sv1,iv1 = experiment2(1,10)
+    b2,s2,i2,bv2,sv2,iv2 = experiment2(1,100)
+    b3,s3,i3,bv3,sv3,iv3 = experiment2(1,1000)
+    b4,s4,i4,bv4,sv4,iv4 = experiment2(1,3000)
+    b5,s5,i5,bv5,sv5,iv5 = experiment2(1,5000)
     
-    y=[10,100,1000,5000,10000]
+
+    x1=[i1,i2,i3,i4,i5]
+    x2=[iv1,iv2,iv3,iv4,iv5]
+    y=[10,100,1000,3000,5000]
 
     fig, ax = plt.subplots()
-    ax.scatter(b, y)
-    ax.scatter(s, y, color='r')
-    ax.scatter(i, y, color='g')
+    ax.scatter(y, x1)
+    ax.scatter(y, x2)
 
-    plt.plot(b, y, label = "bubble sort")
-    plt.plot(s, y, label = "selection sort")
-    plt.plot(i, y, label = "insertion sort")
+    plt.plot(y, x1, label = "insertion sort")
+    plt.plot(y, x2, label = "insertion sort variation")
 
-    ax.set_xlabel('Time (seconds)')
-    ax.set_ylabel('Length of List')
+    ax.set_xlabel('Length of List')
+    ax.set_ylabel('Time (seconds)')
     ax.legend()
-    ax.set_title('List length vs Time Displaying for ten runs')
+    ax.set_title('List length vs Time Displaying for 10 runs')
 
-    print("====================================RESULTS============================")
-    
-    experiment2(10,10)
-    experiment2(10,100)
-    experiment2(10,1000)
-    experiment2(10,5000)
-    experiment2(10,10000)
-
-# ******************* Experiment 3 *******************
-# def experiment3(numberOfRuns, swaps, list_length=1000, max_value=10000):
-#     total1=0
-#     total2=0
-#     total3=0
-
-#     for _ in range(numberOfRuns):
-#         near_sorted_list = create_near_sorted_list(list_length, max_value, swaps)
-#         start = timeit.default_timer()
-#         bubble_sort(near_sorted_list.copy())  # Create a copy to ensure the same list is used for all algorithms
-#         total1 += timeit.default_timer() - start
-
-#         start = timeit.default_timer()
-#         selection_sort(near_sorted_list.copy())
-#         total2 += timeit.default_timer() - start
-
-#         start = timeit.default_timer()
-#         insertion_sort(near_sorted_list.copy())
-#         total3 += timeit.default_timer() - start
-
-#     avg_time_bubble = total1 / numberOfRuns
-#     avg_time_selection = total2 / numberOfRuns
-#     avg_time_insertion = total3 / numberOfRuns
-
-#     print("Bubble sort -- List Length:", list_length, "Swaps:", swaps, "Average Time:", avg_time_bubble, "sec")
-#     print("Selection sort -- List Length:", list_length, "Swaps:", swaps, "Average Time:", avg_time_selection, "sec")
-#     print("Insertion sort -- List Length:", list_length, "Swaps:", swaps, "Average Time:", avg_time_insertion, "sec")
-#     print("================================================================")
-
-#     return avg_time_bubble, avg_time_selection, avg_time_insertion
-
-# def run_experiment3():
-#     avg_time_bubble, avg_time_selection, avg_time_insertion = experiment3(1, 10)
-#     avg_time_bubble, avg_time_selection, avg_time_insertion = experiment3(1, 100)
-#     avg_time_bubble, avg_time_selection, avg_time_insertion = experiment3(1, 500)
-#     avg_time_bubble, avg_time_selection, avg_time_insertion = experiment3(1, 1000)
-
-#     avg_time_bubble, avg_time_selection, avg_time_insertion = experiment3(10, 10)
-#     avg_time_bubble, avg_time_selection, avg_time_insertion = experiment3(10, 100)
-#     avg_time_bubble, avg_time_selection, avg_time_insertion = experiment3(10, 500)
-#     avg_time_bubble, avg_time_selection, avg_time_insertion = experiment3(10, 1000)
-
-
-def experiment3(numberOfRuns, maxSwaps, listLength=1000):
-    total_times_bubble = []
-    total_times_selection = []
-    total_times_insertion = []
-    swap_values = list(range(0, maxSwaps + 1))
-
-    for swaps in swap_values:
-        total1 = 0
-        total2 = 0
-        total3 = 0
-
-        for _ in range(numberOfRuns):
-            near_sorted_list = create_near_sorted_list(listLength, maxSwaps, swaps)
-
-            start = timeit.default_timer()
-            bubble_sort(near_sorted_list.copy())  # Create a copy to ensure the same list is used for all algorithms
-            total1 += timeit.default_timer() - start
-
-            start = timeit.default_timer()
-            selection_sort(near_sorted_list.copy())
-            total2 += timeit.default_timer() - start
-
-            start = timeit.default_timer()
-            insertion_sort(near_sorted_list.copy())
-            total3 += timeit.default_timer() - start
-
-        avg_time_bubble = total1 / numberOfRuns
-        avg_time_selection = total2 / numberOfRuns
-        avg_time_insertion = total3 / numberOfRuns
-
-        total_times_bubble.append(avg_time_bubble)
-        total_times_selection.append(avg_time_selection)
-        total_times_insertion.append(avg_time_insertion)
-
-    plt.figure(figsize=(10, 6))
-    plt.plot(swap_values, total_times_bubble, label='Bubble Sort')
-    plt.plot(swap_values, total_times_selection, label='Selection Sort')
-    plt.plot(swap_values, total_times_insertion, label='Insertion Sort')
-    plt.xlabel('Number of Random Swaps')
-    plt.ylabel('Average Time (seconds)')
-    plt.title(f'Swaps vs Time for List Length {listLength}')
-    plt.legend()
-    plt.grid(True)
     plt.show()
 
 
+# ******************* Experiment 3 *******************
+
+
+
 def main():
-    experiment3(1, 500)
+    graph_experiment1()
+    experiment1(1,10)
+    experiment1(1,100)
+    experiment1(1,1000)
+    experiment1(1,3000)
+    experiment1(1,5000)
 
 main()
