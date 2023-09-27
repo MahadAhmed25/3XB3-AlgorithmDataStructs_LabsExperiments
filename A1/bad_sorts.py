@@ -80,13 +80,15 @@ def bubble_sort(L):
 def bubble_sort2(L):
     for i in range(len(L)):
         value = L[0]
-        for j in range(len(L) - i- 1):
+        for j in range(len(L) - 1 - i):
             if value > L[j + 1]:
                 L[j] = L[j + 1]
             else:
                 L[j] = value
                 value = L[j+1]
         L[-i-1] = value
+
+    return L
 
 # ******************* Selection sort code *******************
 
@@ -350,11 +352,11 @@ def experiment3(numberOfRuns, maxSwaps, listLength=10000):
 
 
 
-def graph_experiment3():  #valizan@mcmaster.ca
-    b1,s1,i1 = experiment3(2,10)
-    b2,s2,i2 = experiment3(2,100)
-    b3,s3,i3 = experiment3(2,1000)
-    b4,s4,i4 = experiment3(2,5000)
+def graph_experiment3(): 
+    b1,s1,i1 = experiment3(1,10)
+    b2,s2,i2 = experiment3(1,100)
+    b3,s3,i3 = experiment3(1,1000)
+    b4,s4,i4 = experiment3(1,5000)
 
     b=[b1,b2,b3,b4]
     s=[s1,s2,s3,s4]
@@ -379,6 +381,6 @@ def graph_experiment3():  #valizan@mcmaster.ca
 
 
 def main():
-    #run experiments here
+    graph_experiment3()
     return
 main()
