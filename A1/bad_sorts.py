@@ -152,7 +152,15 @@ def experiment1(numberOfRuns, numberOfElements):
     print("================================================================")
     return x1,x2,x3
 
-def graph_experiment1():
+def graph_and_run_experiment1():
+    print("====================RESULTS for 1 Run====================")
+    experiment1(1,10)
+    experiment1(1,100)
+    experiment1(1,1000)
+    experiment1(1,3000)
+    experiment1(1,5000)
+
+    print("====================RESULTS for 10 Run====================")
     b1,s1,i1 = experiment1(10,10)
     b2,s2,i2 = experiment1(10,100)
     b3,s3,i3 = experiment1(10,1000)
@@ -176,7 +184,7 @@ def graph_experiment1():
     ax.set_ylabel('Time (seconds)')
     ax.set_xlabel('Length of List')
     ax.legend()
-    ax.set_title('List length vs Time for 10 runs')
+    ax.set_title('List length vs Time for 10 runs of all 3 bad sorts')
 
     plt.show()
 
@@ -227,47 +235,83 @@ def experiment2(numberOfRuns, numberOfElements):
     x_selection_variation = total_selection_variation/numberOfRuns
     x_insertion_variation = total_insertion_variation/numberOfRuns
     
-    print("Bubble sort -- listLength: ", numberOfElements, " time: ", x_bubble, "sec")
-    print("Bubble sort variation-- listLength: ", numberOfElements, " time: ", x_bubble_variation, "sec")
+    print("Bubble sort -- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x_bubble, "sec")
+    print("Bubble sort variation-- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x_bubble_variation, "sec")
 
     print("------------------------------------------------------------------")
     
-    print("Selection sort -- listLength: ", numberOfElements, " time: ", x_selection, "sec")
-    print("Selection sort variation -- listLength: ", numberOfElements, " time: ", x_selection_variation, "sec")
+    print("Selection sort -- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x_selection, "sec")
+    print("Selection sort variation -- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x_selection_variation, "sec")
     
     print("------------------------------------------------------------------")
 
-    print("Insertion sort -- listLength: ", numberOfElements, " time: ", x_insertion, "sec")
-    print("Insertion sort variation -- listLength: ", numberOfElements, " time: ", x_insertion_variation, "sec")
+    print("Insertion sort -- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x_insertion, "sec")
+    print("Insertion sort variation -- listLength: ", numberOfElements, "runs: ", numberOfRuns, " time: ", x_insertion_variation, "sec")
     print("================================================================")
-    
-    # return x_bubble, x_bubble_variation
 
     return x_bubble, x_selection, x_insertion, x_bubble_variation, x_selection_variation, x_insertion_variation
 
-def graph_experiment2():
-    b1,s1,i1,bv1,sv1,iv1 = experiment2(1,10)
-    b2,s2,i2,bv2,sv2,iv2 = experiment2(1,100)
-    b3,s3,i3,bv3,sv3,iv3 = experiment2(1,1000)
-    b4,s4,i4,bv4,sv4,iv4 = experiment2(1,3000)
-    b5,s5,i5,bv5,sv5,iv5 = experiment2(1,5000)
+
+def graph_and_run_experiment2():
+    print("====================RESULTS for 1 Run====================")
+    experiment2(1,10)
+    experiment2(1,100)
+    experiment2(1,1000)
+    experiment2(1,3000)
+    experiment2(1,5000)
     
+    print("====================RESULTS for 10 Runs====================")
+    b1,s1,i1,bv1,sv1,iv1 = experiment2(10,10)
+    b2,s2,i2,bv2,sv2,iv2 = experiment2(10,100)
+    b3,s3,i3,bv3,sv3,iv3 = experiment2(10,1000)
+    b4,s4,i4,bv4,sv4,iv4 = experiment2(10,3000)
+    b5,s5,i5,bv5,sv5,iv5 = experiment2(10,5000)
+    
+    y = [10, 100, 1000, 3000, 5000]
 
-    x1=[i1,i2,i3,i4,i5]
-    x2=[iv1,iv2,iv3,iv4,iv5]
-    y=[10,100,1000,3000,5000]
+    # Data for the sorts
+    bubble_data = [b1, b2, b3, b4, b5]
+    bubble_variation_data = [bv1, bv2, bv3, bv4, bv5]
+    selection_data = [s1, s2, s3, s4, s5]
+    selection_variation_data = [sv1, sv2, sv3, sv4, sv5]
+    insertion_data = [i1, i2, i3, i4, i5]
+    insertion_variation_data = [iv1, iv2, iv3, iv4, iv5]
 
+    # plot bubble sort vs variation
     fig, ax = plt.subplots()
-    ax.scatter(y, x1)
-    ax.scatter(y, x2)
-
-    plt.plot(y, x1, label = "insertion sort")
-    plt.plot(y, x2, label = "insertion sort variation")
-
+    ax.scatter(y, bubble_data, color='r')
+    ax.scatter(y, bubble_variation_data, color='b')
+    ax.plot(y, bubble_data, color='r', label='Bubble sort')
+    ax.plot(y, bubble_variation_data, color='b', label='Bubble sort variation')
     ax.set_xlabel('Length of List')
     ax.set_ylabel('Time (seconds)')
     ax.legend()
-    ax.set_title('List length vs Time Displaying for 10 runs')
+    ax.set_title('Bubble Sort vs Bubble Sort Variation')
+    plt.show()
+
+    # plot selection sort vs variation
+    fig, ax = plt.subplots()
+    ax.scatter(y, selection_data, color='r')
+    ax.scatter(y, selection_variation_data, color='b')
+    ax.plot(y, selection_data, color='r', label='Selection sort')
+    ax.plot(y, selection_variation_data, color='b', label='Selection sort variation')
+    ax.set_xlabel('Length of List')
+    ax.set_ylabel('Time (seconds)')
+    ax.legend()
+    ax.set_title('Selection Sort vs Selection Sort Variation')
+    plt.show()
+
+    # plot insertion sort vs variation
+    fig, ax = plt.subplots()
+    ax.scatter(y, insertion_data, color='r')
+    ax.scatter(y, insertion_variation_data, color='b')
+    ax.plot(y, insertion_data, color='r', label='Insertion sort')
+    ax.plot(y, insertion_variation_data, color='b', label='Insertion sort variation')
+    ax.set_xlabel('Length of List')
+    ax.set_ylabel('Time (seconds)')
+    ax.legend()
+    ax.set_title('Insertion Sort vs Insertion Sort Variation')
+    plt.show()
 
     
 
