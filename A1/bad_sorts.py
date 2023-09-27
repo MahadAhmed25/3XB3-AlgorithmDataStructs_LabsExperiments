@@ -269,6 +269,64 @@ def graph_experiment2():
     ax.legend()
     ax.set_title('List length vs Time Displaying for 10 runs')
 
+    
+
+
+def experiment3(numberOfRuns, maxSwaps, listLength=10000):
+    maxValue = 10000
+    
+    total1, total2, total3 = 0, 0, 0
+
+    for i in range(numberOfRuns):
+        nearSortedlist = create_near_sorted_list(listLength, maxValue, maxSwaps)
+
+        start = timeit.default_timer()
+        bubble_sort(nearSortedlist)
+        total1 += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        selection_sort(nearSortedlist)
+        total2 += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        insertion_sort(nearSortedlist)
+        total3 += timeit.default_timer() - start
+
+    x1=total1/numberOfRuns
+    x2= total2/numberOfRuns
+    x3= total3/numberOfRuns
+
+    print("==============Results for sorting near sorted list===============")
+    print("Bubble sort -- swaps: ", maxSwaps, " time: ", x1, "sec")
+    print("Selection sort -- swaps: ", maxSwaps, " time: ", x2, "sec")
+    print("Insertion sort -- swaps: ", maxSwaps, " time: ", x3, "sec")
+    print("=================================================================")
+
+    return x1, x2, x3
+
+
+
+def graph_experiment3():  #valizan@mcmaster.ca
+    b1,s1,i1 = experiment3(2,10)
+    b2,s2,i2 = experiment3(2,100)
+    b3,s3,i3 = experiment3(2,1000)
+    b4,s4,i4 = experiment3(2,5000)
+
+    b=[b1,b2,b3,b4]
+    s=[s1,s2,s3,s4]
+    i=[i1,i2,i3,i4]
+    x=[10,100,1000,5000]
+
+    fig, ax = plt.subplots()
+    plt.plot(x, b, label = "bubble sort")
+    plt.plot(x, s, label = "selection sort")
+    plt.plot(x, i, label = "insertion sort")
+
+    ax.set_xlabel('swaps')
+    ax.set_ylabel('time')
+    ax.legend()
+    ax.set_title('swaps vs time list sorting')
+    
     plt.show()
 
 
@@ -277,11 +335,6 @@ def graph_experiment2():
 
 
 def main():
-    graph_experiment1()
-    experiment1(1,10)
-    experiment1(1,100)
-    experiment1(1,1000)
-    experiment1(1,3000)
-    experiment1(1,5000)
-
+    #run experiments here
+    return
 main()
