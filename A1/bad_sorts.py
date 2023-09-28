@@ -343,25 +343,34 @@ def experiment3(numberOfRuns, maxSwaps, listLength=10000):
     x3= total3/numberOfRuns
 
     print("==============Results for sorting near sorted list===============")
-    print("Bubble sort -- swaps: ", maxSwaps, " time: ", x1, "sec")
-    print("Selection sort -- swaps: ", maxSwaps, " time: ", x2, "sec")
-    print("Insertion sort -- swaps: ", maxSwaps, " time: ", x3, "sec")
+    print("Bubble sort -- swaps: ", maxSwaps, "runs: ", numberOfRuns, " time: ", x1, "sec")
+    print("Selection sort -- swaps: ", maxSwaps, "runs: ", numberOfRuns, " time: ", x2, "sec")
+    print("Insertion sort -- swaps: ", maxSwaps, "runs: ", numberOfRuns, " time: ", x3, "sec")
     print("=================================================================")
 
     return x1, x2, x3
 
 
 
-def graph_experiment3(): 
-    b1,s1,i1 = experiment3(1,10)
-    b2,s2,i2 = experiment3(1,100)
-    b3,s3,i3 = experiment3(1,1000)
-    b4,s4,i4 = experiment3(1,5000)
+def graph_and_run_experiment3(): 
+    print("====================RESULTS for 1 Run====================")
+    experiment3(1,10)
+    experiment3(1,100)
+    experiment3(1,1000)
+    experiment3(1,3000)
+    experiment3(1,5000)
+    
+    print("====================RESULTS for 10 Runs====================")
+    b1,s1,i1 = experiment3(10,10)
+    b2,s2,i2 = experiment3(10,100)
+    b3,s3,i3 = experiment3(10,1000)
+    b3,s3,i3 = experiment3(10,3000)
+    b4,s4,i4 = experiment3(10,5000)
 
     b=[b1,b2,b3,b4]
     s=[s1,s2,s3,s4]
     i=[i1,i2,i3,i4]
-    x=[10,100,1000,5000]
+    x=[10,100,1000,300,5000]
 
     fig, ax = plt.subplots()
     plt.plot(x, b, label = "bubble sort")
@@ -381,6 +390,5 @@ def graph_experiment3():
 
 
 def main():
-    graph_experiment3()
-    return
+    graph_and_run_experiment3()
 main()
