@@ -198,7 +198,143 @@ class Heap:
         return s
 
 # *************************************
+#Expieremnt 4 
 
+def experiment4(numberOfRuns, numberOfElements):
+    total1 = 0
+    total2 = 0
+    total3 = 0
+    for i in range(numberOfRuns):
+        randomList = create_random_list(numberOfElements, 10000)
+
+        start = timeit.default_timer()
+        quicksort(randomList)
+        total1 += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        mergesort(randomList)
+        total2 += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        heapsort(randomList)
+        total3 += timeit.default_timer() - start
+    
+    x1=total1/numberOfRuns
+    x2= total2/numberOfRuns
+    x3= total3/numberOfRuns
+    
+    print("Quick sort -- listLength: ", numberOfElements, " time: ", x1, "sec")
+    print("Merge sort -- listLength: ", numberOfElements, " time: ", x2, "sec")
+    print("Heap sort -- listLength: ", numberOfElements, " time: ", x3, "sec")
+    print("================================================================")
+    return x1,x2,x3
+
+def run_experiment_4():
+
+    q1,m1,h1 = experiment4(10,10)
+    q2,m2,h2 = experiment4(10,100)
+    q3,m3,h3 = experiment4(10,1000)
+    q4,m4,h4 = experiment4(10,3000)
+    q5,m5,h5 = experiment4(10,5000)
+
+    q=[q1,q2,q3,q4,q5]
+    m=[m1,m2,m3,m4,m5]
+    h=[h1,h2,h3,h4,h5]
+    x=[10,100,1000,3000,5000]
+
+    fig, ax = plt.subplots()
+
+    plt.plot(x, q, label = "Quick sort")
+    plt.plot(x, m, label = "Merge sort")
+    plt.plot(x, h, label = "Heap sort")
+
+    ax.set_xlabel('Length of List')
+    ax.set_ylabel('Time (seconds)')
+    ax.legend()
+    ax.set_title('List length vs Time Displaying for 10 runs of "Good Sort"')
+
+
+    plt.show()
+
+# *************************************
+#Expieremnt 5
+
+def create_near_sorted_list(length, max_value, swaps):
+    L = create_random_list(length, max_value)
+    L.sort()
+    for _ in range(swaps):
+        r1 = random.randint(0, length - 1)
+        r2 = random.randint(0, length - 1)
+        swap(L, r1, r2)
+    return L
+
+def swap(L, i, j):
+    L[i], L[j] = L[j], L[i] 
+
+def experiment5(numberOfRuns,numberOfElements,swaps):
+    total1 = 0
+    total2 = 0
+    total3 = 0
+    max_value= 10000
+
+    for i in range(numberOfRuns):
+        swapped_list= create_near_sorted_list(numberOfElements,max_value,swaps)
+        start = timeit.default_timer()
+        quicksort(swapped_list)
+        total1 += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        mergesort(swapped_list)
+        total2 += timeit.default_timer() - start
+
+        start = timeit.default_timer()
+        heapsort(swapped_list)
+        total3 += timeit.default_timer() - start
+    
+    x1=total1/numberOfRuns
+    x2= total2/numberOfRuns
+    x3= total3/numberOfRuns
+    
+    print("Quick sort -- listLength: ", numberOfElements, " time: ", x1, "sec")
+    print("Merge sort -- listLength: ", numberOfElements, " time: ", x2, "sec")
+    print("Heap sort -- listLength: ", numberOfElements, " time: ", x3, "sec")
+    print("================================================================")
+    return x1,x2,x3
+
+def run_experiment_5():
+
+    q1,m1,h1 = experiment5(1,1000,1)
+    q2,m2,h2 = experiment5(1,1000,10)
+    q3,m3,h3 = experiment5(1,1000,100)
+    q4,m4,h4 = experiment5(1,1000,200)
+    q5,m5,h5 = experiment5(1,1000,300)
+    q6,m6,h6 = experiment5(1,1000,400)
+    q7,m7,h7 = experiment5(1,1000,500)
+    #q8,m8,h8 = experiment5(1,1000,600)
+    #q9,m9,h9 = experiment5(1,1000,700)
+
+    q=[q1,q2,q3,q4,q5,q6,q7]#,q8,q9]
+    m=[m1,m2,m3,m4,m5,m6,m7]#,m8,m9]
+    h=[h1,h2,h3,h4,h5,h6,h7]#,h8,h9]
+    y=[1,10,100,200,300,400,500]#,600,700]
+
+    fig, ax = plt.subplots()
+
+    plt.plot(y, q, label = "Quick sort")
+    plt.plot(y, m, label = "Merge sort")
+    plt.plot(y, h, label = "Heap sort")
+
+    ax.set_xlabel('Swaps')
+    ax.set_ylabel('Time (seconds)')
+    ax.legend()
+    ax.set_title('Swap vs Time for 10 runs')
+
+
+
+    plt.show()
+
+#-----------------------------------------
+#Expierment idk cuz sm1 named it expierment
 def experiment(numberOfRuns, numberOfElements):
     total1 = 0
     total2 = 0
@@ -372,6 +508,7 @@ def graphExperiment8():
 
 
 def main():
-    graphExperiment8()
+    #graphExperiment8()
+    run_experiment_5()
 
 main()
