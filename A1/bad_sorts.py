@@ -80,13 +80,14 @@ def bubble_sort(L):
 def bubble_sort2(L):
     for i in range(len(L)):
         value = L[0]
-        for j in range(len(L) - 1 - i):
+        for j in range(len(L) - 1 ):
             if value > L[j + 1]:
                 L[j] = L[j + 1]
             else:
                 L[j] = value
                 value = L[j+1]
-        L[-i-1] = value
+                j+=1
+        L[len(L)-1] = value
 
     return L
 
@@ -391,4 +392,5 @@ def graph_and_run_experiment3():
 
 def main():
     graph_and_run_experiment3()
+    
 main()
