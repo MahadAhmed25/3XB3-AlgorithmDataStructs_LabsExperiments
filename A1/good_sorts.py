@@ -38,7 +38,28 @@ def quicksort_copy(L):
             right.append(num)
     return quicksort_copy(left) + [pivot] + quicksort_copy(right)
 
-# *************************************
+
+# ************ Dual Pivot Quick Sort ************
+def dual_quicksort(L):
+    if len(L) < 2:
+        return L
+    pivot1, pivot2 = L[0], L[1]
+    left, right, middle = [], [], []
+
+    if pivot1 > pivot2:
+        t = pivot1
+        pivot1 = pivot2
+        pivot2 = t
+
+    for num in L[2:]:
+        if num < pivot1:
+            left.append(num)
+        elif num > pivot2:
+            right.append(num)
+        else:
+            middle.append(num)
+
+    return dual_quicksort(left) + [pivot1] + dual_quicksort(middle) + [pivot2] + dual_quicksort(right)
 
 
 # ************ Merge Sort *************
@@ -230,7 +251,6 @@ def experiment4(numberOfRuns, numberOfElements):
     return x1,x2,x3
 
 def run_experiment_4():
-
     q1,m1,h1 = experiment4(10,10)
     q2,m2,h2 = experiment4(10,100)
     q3,m3,h3 = experiment4(10,1000)
@@ -333,66 +353,59 @@ def run_experiment_5():
 
     plt.show()
 
-#-----------------------------------------
-#Expierment idk cuz sm1 named it expierment
-def experiment(numberOfRuns, numberOfElements):
-    total1 = 0
-    total2 = 0
-    total3 = 0
-    for i in range(numberOfRuns):
-        randomList = create_random_list(numberOfElements, 10000)
+    
+
+def experiment6(numberOfRuns, listLength = 10000):
+    maxValue = 10000
+    total1, total2  = 0, 0
+
+    for _ in range(numberOfRuns):
+        randomList = create_random_list(listLength, maxValue)
 
         start = timeit.default_timer()
-        quicksort(randomList)
+        mergesort(list)
         total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        mergesort(randomList)
+        bottom_up_mergesort(list)
         total2 += timeit.default_timer() - start
 
-        start = timeit.default_timer()
-        heapsort(randomList)
-        total3 += timeit.default_timer() - start
-    
     x1=total1/numberOfRuns
     x2= total2/numberOfRuns
-    x3= total3/numberOfRuns
-    
-    print("Quick sort -- listLength: ", numberOfElements, " time: ", x1, "sec")
-    print("Merge sort -- listLength: ", numberOfElements, " time: ", x2, "sec")
-    print("Heap sort -- listLength: ", numberOfElements, " time: ", x3, "sec")
-    print("================================================================")
-    return x1,x2,x3
 
-def run_experiment2():
+    print("==============Results for sorting near sorted list===============")
+    print("Merge Sort -- legnth: ", listLen, " time: ", x1, "sec")
+    print("Iterative Merge sort -- legnth: ", listLen, " time: ", x2, "sec")
+    print("=================================================================")
 
-    q1,m1,h1 = experiment(10,10)
-    q2,m2,h2 = experiment(10,100)
-    q3,m3,h3 = experiment(10,1000)
-    q4,m4,h4 = experiment(10,5000)
-    q5,m5,h5 = experiment(10,10000)
+    return x1, x2
 
-    q=[q1,q2,q3,q4,q5]
-    m=[m1,m2,m3,m4,m5]
-    h=[h1,h2,h3,h4,h5]
-    y=[10,100,1000,5000,10000]
+
+def graph_and_run_experiment6():
+    b1,bt1 = experiment6(10,10)
+    b1,bt1 = experiment6(10,100)
+    b2,bt2 = experiment6(10,1000)
+    b3,bt3 = experiment6(10,3000)
+    b4,bt4 = experiment6(10,5000)
+
+    b1=[b11,b12,b13,b14,b15,b16]
+    b2=[b21,b22,b23,b24]
+    x=[10,100,1000,3000,5000]
 
     fig, ax = plt.subplots()
-    ax.scatter(q, y)
-    ax.scatter(m, y, color='r')
-    ax.scatter(h, y, color='g')
+    ax.scatter(x, b1)
+    ax.scatter(x, b2)
 
-    plt.plot(q, y, label = "Quick sort")
-    plt.plot(m, y, label = "Merge sort")
-    plt.plot(h, y, label = "Heap sort")
+    plt.plot(x, b1, label = "traditional quick sort")
+    plt.plot(x, b2, label = "dual pivot quick sort")
 
-    ax.set_xlabel('Time (seconds)')
-    ax.set_ylabel('Length of List')
+    ax.set_ylabel('Time (seconds)')
+    ax.set_xlabel('Length of List')
     ax.legend()
-    ax.set_title('List length vs Time Displaying for 10 runs of "Good Sort"')
-
+    ax.set_title('List length vs Time Comparing Merge sort vs Iterative Merge Sort for 10 Runs')
 
     plt.show()
+
 
 def experiment7(numberOfRuns, listLen = 1000):
     maxValue = 10000

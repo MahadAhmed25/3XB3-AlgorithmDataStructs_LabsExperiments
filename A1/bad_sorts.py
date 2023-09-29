@@ -80,14 +80,13 @@ def bubble_sort(L):
 def bubble_sort2(L):
     for i in range(len(L)):
         value = L[0]
-        for j in range(len(L) - 1 ):
+        for j in range(len(L) - 1 - i):
             if value > L[j + 1]:
                 L[j] = L[j + 1]
             else:
                 L[j] = value
                 value = L[j+1]
-                j+=1
-        L[len(L)-1] = value
+        L[-i-1] = value
 
     return L
 
@@ -289,7 +288,7 @@ def graph_and_run_experiment2():
     ax.set_xlabel('Length of List')
     ax.set_ylabel('Time (seconds)')
     ax.legend()
-    ax.set_title('Bubble Sort vs Bubble Sort Variation')
+    ax.set_title('List Length vs Time for 10 runs comparing Bubble Sort vs Bubble Sort Variation')
     plt.show()
 
     # plot selection sort vs variation
@@ -301,7 +300,7 @@ def graph_and_run_experiment2():
     ax.set_xlabel('Length of List')
     ax.set_ylabel('Time (seconds)')
     ax.legend()
-    ax.set_title('Selection Sort vs Selection Sort Variation')
+    ax.set_title('List Length vs Time for 10 runs comparing Selection Sort vs Selection Sort Variation')
     plt.show()
 
     # plot insertion sort vs variation
@@ -313,12 +312,12 @@ def graph_and_run_experiment2():
     ax.set_xlabel('Length of List')
     ax.set_ylabel('Time (seconds)')
     ax.legend()
-    ax.set_title('Insertion Sort vs Insertion Sort Variation')
+    ax.set_title('List Length vs Time for 10 runs comparing Insertion Sort vs Insertion Sort Variation')
     plt.show()
 
     
 
-
+# ******************* Experiment 3 *******************
 def experiment3(numberOfRuns, maxSwaps, listLength=10000):
     maxValue = 10000
     
@@ -365,13 +364,13 @@ def graph_and_run_experiment3():
     b1,s1,i1 = experiment3(10,10)
     b2,s2,i2 = experiment3(10,100)
     b3,s3,i3 = experiment3(10,1000)
-    b3,s3,i3 = experiment3(10,3000)
-    b4,s4,i4 = experiment3(10,5000)
+    b4,s4,i4 = experiment3(10,3000)
+    b5,s5,i5 = experiment3(10,5000)
 
-    b=[b1,b2,b3,b4]
-    s=[s1,s2,s3,s4]
-    i=[i1,i2,i3,i4]
-    x=[10,100,1000,300,5000]
+    b=[b1,b2,b3,b4,b5]
+    s=[s1,s2,s3,s4,s5]
+    i=[i1,i2,i3,i4,i5]
+    x=[10,100,1000,3000,5000]
 
     fig, ax = plt.subplots()
     plt.plot(x, b, label = "bubble sort")
@@ -381,16 +380,14 @@ def graph_and_run_experiment3():
     ax.set_xlabel('swaps')
     ax.set_ylabel('time')
     ax.legend()
-    ax.set_title('swaps vs time list sorting')
+    ax.set_title('Number of Swaps vs Time for 10 runs comparing all 3 bad sorts')
     
     plt.show()
 
 
-# ******************* Experiment 3 *******************
-
-
 
 def main():
+    graph_and_run_experiment1()
+    graph_and_run_experiment2()
     graph_and_run_experiment3()
-    
 main()
