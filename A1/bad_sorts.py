@@ -131,7 +131,6 @@ def experiment1(numberOfRuns, numberOfElements):
     for _ in range(numberOfRuns):
         randomList = create_random_list(numberOfElements, maxValue)
 
-
         start = timeit.default_timer()
         selection_sort(randomList)
         total2 += timeit.default_timer() - start
@@ -387,10 +386,7 @@ def graph_and_run_experiment3():
 
 
 def main():
-    L=[1,3,23,21,56,5,69,32,2,4,8]
-    a=bubble_sort2(L)
-    print(a)
-    #graph_and_run_experiment1()
-    #graph_and_run_experiment2()
-    #graph_and_run_experiment3()
+    graph_and_run_experiment1()
+    graph_and_run_experiment2()
+    graph_and_run_experiment3()
 main()
