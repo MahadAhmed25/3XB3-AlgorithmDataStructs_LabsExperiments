@@ -106,6 +106,7 @@ def merge(left, right):
                 j += 1
     return L
 
+# ************ Iterative Merge Sort *************
 
 def bottom_up_mergesort(a):
     width = 1
@@ -446,6 +447,7 @@ def graph_and_run_experiment6():
     plt.show()
 
 
+# Recursive merge sort vs iterative merge sort
 def experiment7(numberOfRuns, listLen=1000):
     maxValue = 10000
 
@@ -472,7 +474,7 @@ def experiment7(numberOfRuns, listLen=1000):
 
     return x1, x2
 
-
+# Prints the results from experiment7() and creates a graph with the generated results
 def graph_and_run_experiment7():
     print("====================RESULTS for 1 Run====================")
     experiment7(1, 10)
@@ -509,7 +511,7 @@ def graph_and_run_experiment7():
 
     plt.show()
 
-
+# Testing sorting algorithms for smaller list legnths. 
 def experiment8(numberOfRuns, numberOfElements):
     total1 = 0
     total2 = 0
@@ -541,6 +543,7 @@ def experiment8(numberOfRuns, numberOfElements):
     return x1, x2, x3
 
 
+# Prints the results from experiment8() and creates a graph with the generated results
 def graph_and_run_experiment8():
     print("====================RESULTS for 10 Run====================")
     experiment8(10, 3)
