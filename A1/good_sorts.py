@@ -264,7 +264,14 @@ def experiment4(numberOfRuns, numberOfElements):
     return x1, x2, x3
 
 
-def run_experiment_4():
+def graph_and_run_experiment_4():
+    print("====================RESULTS for 1 Run====================")
+    experiment4(1, 10)
+    experiment4(1, 100)
+    experiment4(1, 1000)
+    experiment4(1, 3000)
+    experiment4(1, 5000)
+    print("====================RESULTS for 10 runs ====================")
     q1, m1, h1 = experiment4(10, 10)
     q2, m2, h2 = experiment4(10, 100)
     q3, m3, h3 = experiment4(10, 1000)
@@ -291,7 +298,6 @@ def run_experiment_4():
 
 # *************************************
 # Experiment 5
-
 
 def create_near_sorted_list(length, max_value, swaps):
     L = create_random_list(length, max_value)
@@ -339,21 +345,28 @@ def experiment5(numberOfRuns, numberOfElements, swaps):
     return x1, x2, x3
 
 
-def run_experiment_5():
-    q1, m1, h1 = experiment5(1, 1000, 1)
-    q2, m2, h2 = experiment5(1, 1000, 10)
-    q3, m3, h3 = experiment5(1, 1000, 100)
-    q4, m4, h4 = experiment5(1, 1000, 200)
-    q5, m5, h5 = experiment5(1, 1000, 300)
-    q6, m6, h6 = experiment5(1, 1000, 400)
-    q7, m7, h7 = experiment5(1, 1000, 500)
-    #q8,m8,h8 = experiment5(1,1000,600)
-    #q9,m9,h9 = experiment5(1,1000,700)
+def graph_and_run_experiment_5():
+    print("====================RESULTS for 1 run ====================")
+    experiment5(1, 1000, 1)
+    experiment5(1, 1000, 10)
+    experiment5(1, 1000, 100)
+    experiment5(1, 1000, 200)
+    experiment5(1, 1000, 300)
+    experiment5(1, 1000, 400)
+    experiment5(1, 1000, 500)
+    print("====================RESULTS for 10 runs ====================")
+    q1, m1, h1 = experiment5(10, 1000, 1)
+    q2, m2, h2 = experiment5(10, 1000, 10)
+    q3, m3, h3 = experiment5(10, 1000, 100)
+    q4, m4, h4 = experiment5(10, 1000, 200)
+    q5, m5, h5 = experiment5(10, 1000, 300)
+    q6, m6, h6 = experiment5(10, 1000, 400)
+    q7, m7, h7 = experiment5(10, 1000, 500)
 
-    q = [q1, q2, q3, q4, q5, q6, q7]  # ,q8,q9]
-    m = [m1, m2, m3, m4, m5, m6, m7]  # ,m8,m9]
-    h = [h1, h2, h3, h4, h5, h6, h7]  # ,h8,h9]
-    y = [1, 10, 100, 200, 300, 400, 500]  # ,600,700]
+    q = [q1, q2, q3, q4, q5, q6, q7] 
+    m = [m1, m2, m3, m4, m5, m6, m7]
+    h = [h1, h2, h3, h4, h5, h6, h7] 
+    y = [1, 10, 100, 200, 300, 400, 500] 
 
     fig, ax = plt.subplots()
 
@@ -368,6 +381,8 @@ def run_experiment_5():
 
     plt.show()
 
+# *************************************
+# Experiment 6
 
 def experiment6(numberOfRuns, listLength):
     maxValue = 10000
@@ -549,7 +564,10 @@ def graphExperiment8():
 
 
 def main():
+    graph_and_run_experiment_4()
+    graph_and_run_experiment_5()
     graph_and_run_experiment6()
-
+    graphExperiment7()
+    graphExperiment8()
 
 main()

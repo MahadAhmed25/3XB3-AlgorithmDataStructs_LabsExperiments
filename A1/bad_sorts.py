@@ -386,7 +386,8 @@ def graph_and_run_experiment3():
 
 
 def main():
-    graph_and_run_experiment1()
-    graph_and_run_experiment2()
-    graph_and_run_experiment3()
+    print()
+    #graph_and_run_experiment1()
+    #graph_and_run_experiment2()
+    #graph_and_run_experiment3()
 main()
