@@ -473,7 +473,16 @@ def experiment7(numberOfRuns, listLen=1000):
     return x1, x2
 
 
-def graphExperiment7():
+def graph_and_run_experiment7():
+    print("====================RESULTS for 1 Run====================")
+    experiment7(1, 10)
+    experiment7(1, 1000)
+    experiment7(1, 3000)
+    experiment7(1, 5000)
+    experiment7(1, 8000)
+    experiment7(1, 10000)
+
+    print("====================RESULTS for 10 Run====================")
     b11, b21 = experiment7(10, 10)
     b12, b22 = experiment7(10, 1000)
     b13, b23 = experiment7(10, 3000)
@@ -532,8 +541,15 @@ def experiment8(numberOfRuns, numberOfElements):
     return x1, x2, x3
 
 
-def graphExperiment8():
+def graph_and_run_experiment8():
+    print("====================RESULTS for 10 Run====================")
+    experiment8(10, 3)
+    experiment8(10, 7)
+    experiment8(10, 11)
+    experiment8(10, 15)
+    experiment8(10, 20)
 
+    print("====================RESULTS for 10 Run====================")
     i1, m1, q1 = experiment8(100, 3)
     i2, m2, q2 = experiment8(100, 7)
     i3, m3, q3 = experiment8(100, 11)
@@ -567,7 +583,7 @@ def main():
     graph_and_run_experiment_4()
     graph_and_run_experiment_5()
     graph_and_run_experiment6()
-    graphExperiment7()
-    graphExperiment8()
+    graph_and_run_experiment7()
+    graph_and_run_experiment8()
 
 main()
