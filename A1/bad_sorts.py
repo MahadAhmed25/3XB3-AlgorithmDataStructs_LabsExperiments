@@ -131,15 +131,15 @@ def experiment1(numberOfRuns, numberOfElements):
         randomList = create_random_list(numberOfElements, maxValue)
 
         start = timeit.default_timer()
-        selection_sort(randomList)
+        selection_sort(randomList.copy())
         total2 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        bubble_sort(randomList)
+        bubble_sort(randomList.copy())
         total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        insertion_sort(randomList)
+        insertion_sort(randomList.copy())
         total3 += timeit.default_timer() - start
     
     x1=total1/numberOfRuns
@@ -204,27 +204,27 @@ def experiment2(numberOfRuns, numberOfElements):
         randomList = create_random_list(numberOfElements, maxValue)
 
         start = timeit.default_timer()
-        bubble_sort(randomList)
+        bubble_sort(randomList.copy())
         total_bubble += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        bubble_sort2(randomList)
+        bubble_sort2(randomList.copy())
         total_bubble_variation += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        selection_sort(randomList)
+        selection_sort(randomList.copy())
         total_selection += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        selection_sort2(randomList)
+        selection_sort2(randomList.copy())
         total_selection_variation += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        insertion_sort(randomList)
+        insertion_sort(randomList.copy())
         total_insertion += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        insertion_sort2(randomList)
+        insertion_sort2(randomList.copy())
         total_insertion_variation += timeit.default_timer() - start
     
     x_bubble = total_bubble/numberOfRuns
@@ -325,15 +325,15 @@ def experiment3(numberOfRuns, maxSwaps, listLength=10000):
         nearSortedlist = create_near_sorted_list(listLength, maxValue, maxSwaps)
 
         start = timeit.default_timer()
-        bubble_sort(nearSortedlist)
+        bubble_sort(nearSortedlist.copy())
         total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        selection_sort(nearSortedlist)
+        selection_sort(nearSortedlist.copy())
         total2 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        insertion_sort(nearSortedlist)
+        insertion_sort(nearSortedlist.copy())
         total3 += timeit.default_timer() - start
 
     x1=total1/numberOfRuns
@@ -385,8 +385,7 @@ def graph_and_run_experiment3():
 
 
 def main():
-    print()
-    #graph_and_run_experiment1()
-    #graph_and_run_experiment2()
-    #graph_and_run_experiment3()
+    graph_and_run_experiment1()
+    graph_and_run_experiment2()
+    graph_and_run_experiment3()
 main()

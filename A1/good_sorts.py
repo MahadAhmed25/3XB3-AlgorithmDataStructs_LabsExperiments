@@ -233,8 +233,6 @@ class Heap:
 
 # *************************************
 # Experiment 4
-
-
 def experiment4(numberOfRuns, numberOfElements):
     total1 = 0
     total2 = 0
@@ -243,15 +241,15 @@ def experiment4(numberOfRuns, numberOfElements):
         randomList = create_random_list(numberOfElements, 10000)
 
         start = timeit.default_timer()
-        quicksort(randomList)
+        quicksort(randomList.copy())
         total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        mergesort(randomList)
+        mergesort(randomList.copy())
         total2 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        heapsort(randomList)
+        heapsort(randomList.copy())
         total3 += timeit.default_timer() - start
 
     x1 = total1/numberOfRuns
@@ -393,11 +391,11 @@ def experiment6(numberOfRuns, listLength):
         randomList = create_random_list(listLength, maxValue)
 
         start = timeit.default_timer()
-        quicksort(randomList)
+        quicksort(randomList.copy())
         total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        dual_quicksort(randomList)
+        dual_quicksort(randomList.copy())
         total2 += timeit.default_timer() - start
 
     x1 = total1/numberOfRuns
@@ -457,11 +455,11 @@ def experiment7(numberOfRuns, listLen=1000):
         list = create_random_list(listLen, maxValue)
 
         start = timeit.default_timer()
-        mergesort(list)
+        mergesort(list.copy())
         total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        bottom_up_mergesort(list)
+        bottom_up_mergesort(list.copy())
         total2 += timeit.default_timer() - start
 
     x1 = total1/numberOfRuns
@@ -520,15 +518,15 @@ def experiment8(numberOfRuns, numberOfElements):
         randomList = create_random_list(numberOfElements, 100)
 
         start = timeit.default_timer()
-        insertion_sort(randomList)
+        insertion_sort(randomList.copy())
         total1 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        mergesort(randomList)
+        mergesort(randomList.copy())
         total2 += timeit.default_timer() - start
 
         start = timeit.default_timer()
-        quicksort(randomList)
+        quicksort(randomList.copy())
         total3 += timeit.default_timer() - start
 
     x1 = total1/numberOfRuns
