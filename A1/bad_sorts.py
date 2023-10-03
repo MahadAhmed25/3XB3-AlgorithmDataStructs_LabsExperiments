@@ -48,17 +48,21 @@ def insert(L, i):
         
 # ******************* Insertion sort code VARIATION 2 *******************
 
-
 def insertion_sort2(L):
     for i in range(1, len(L)):
-        j = i
-        while j > 0:
-            if L[j] < L[j - 1]:
-                L[j], L[j - 1] = L[j - 1], L[j]
-                j -= 1
-            else:
-                break
+        insert2(L, i)
 
+
+def insert2(L, i):
+    value = L[i]
+    while i > 0:
+        if L[i - 1] > value:
+            L[i] = L[i - 1]
+            i -= 1
+        else:
+            L[i] = value
+            return
+    L[0] = value
 
 
 # ******************* Bubble sort code *******************
