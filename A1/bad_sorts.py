@@ -313,7 +313,6 @@ def graph_and_run_experiment2():
     ax.set_title('List Length vs Time for 10 runs comparing Insertion Sort vs Insertion Sort Variation')
     plt.show()
 
-    
 
 # ******************* Experiment 3 *******************
 def experiment3(numberOfRuns, maxSwaps, listLength=10000):

@@ -22,6 +22,7 @@ def create_random_list(length, max_value):
 
 # ************ Quick Sort ************
 
+
 def quicksort(L):
     copy = quicksort_copy(L)
     for i in range(len(L)):
@@ -107,6 +108,7 @@ def merge(left, right):
     return L
 
 # ************ Iterative Merge Sort *************
+
 
 def bottom_up_mergesort(a):
     width = 1
@@ -233,6 +235,8 @@ class Heap:
 
 # *************************************
 # Experiment 4
+
+
 def experiment4(numberOfRuns, numberOfElements):
     total1 = 0
     total2 = 0
@@ -298,6 +302,7 @@ def graph_and_run_experiment_4():
 # *************************************
 # Experiment 5
 
+
 def create_near_sorted_list(length, max_value, swaps):
     L = create_random_list(length, max_value)
     L.sort()
@@ -362,10 +367,10 @@ def graph_and_run_experiment_5():
     q6, m6, h6 = experiment5(10, 1000, 400)
     q7, m7, h7 = experiment5(10, 1000, 500)
 
-    q = [q1, q2, q3, q4, q5, q6, q7] 
+    q = [q1, q2, q3, q4, q5, q6, q7]
     m = [m1, m2, m3, m4, m5, m6, m7]
-    h = [h1, h2, h3, h4, h5, h6, h7] 
-    y = [1, 10, 100, 200, 300, 400, 500] 
+    h = [h1, h2, h3, h4, h5, h6, h7]
+    y = [1, 10, 100, 200, 300, 400, 500]
 
     fig, ax = plt.subplots()
 
@@ -382,6 +387,7 @@ def graph_and_run_experiment_5():
 
 # *************************************
 # Experiment 6
+
 
 def experiment6(numberOfRuns, listLength):
     maxValue = 10000
@@ -473,6 +479,8 @@ def experiment7(numberOfRuns, listLen=1000):
     return x1, x2
 
 # Prints the results from experiment7() and creates a graph with the generated results
+
+
 def graph_and_run_experiment7():
     print("====================RESULTS for 1 Run====================")
     experiment7(1, 10)
@@ -509,7 +517,9 @@ def graph_and_run_experiment7():
 
     plt.show()
 
-# Testing sorting algorithms for smaller list legnths. 
+# Testing sorting algorithms for smaller list legnths.
+
+
 def experiment8(numberOfRuns, numberOfElements):
     total1 = 0
     total2 = 0
@@ -581,10 +591,11 @@ def graph_and_run_experiment8():
 
 
 def main():
-    graph_and_run_experiment_4()
-    graph_and_run_experiment_5()
-    graph_and_run_experiment6()
-    graph_and_run_experiment7()
-    graph_and_run_experiment8()
+    # graph_and_run_experiment_4()
+    # graph_and_run_experiment_5()
+    # graph_and_run_experiment6()
+    # graph_and_run_experiment7()
+    # graph_and_run_experiment8()
+
 
 main()
