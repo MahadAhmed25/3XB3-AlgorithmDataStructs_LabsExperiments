@@ -1,4 +1,5 @@
 from collections import deque
+import random
 
 #Undirected graph using an adjacency list
 class Graph:
@@ -25,6 +26,24 @@ class Graph:
     def number_of_nodes(self):
         return len(self.adj)
 
+
+# def create_random_graph(i, j):
+#     graph = Graph(i)
+#     edge_count = 0
+
+#     while edge_count < j:
+#         node1 = random.randint(0, i-1)
+#         node2 = random.randint(0, i-1)
+
+#         if node1 != node2 and not graph.are_connected(node1, node2):
+#             graph.add_edge(node1, node2)
+#             print("edge between ", node1, node2)
+#             edge_count += 1
+
+#     return graph
+
+
+# print(create_random_graph(6,7).number_of_nodes())
 
 #Breadth First Search
 def BFS(G, node1, node2):
