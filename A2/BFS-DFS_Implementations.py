@@ -1,4 +1,7 @@
 from collections import deque
+import random
+
+from matplotlib import pyplot as plt
 from graph import Graph
 from graph import BFS
 
@@ -116,6 +119,46 @@ def is_connected(G):
     return True
 
 
+def create_random_graph(i, j):
+    g = Graph(i)
+    edge_count = 0
+
+    while edge_count < j:
+        node1 = random.randint(0, i-1)
+        node2 = random.randint(0, i-1)
+
+        if node1 != node2 and not g.are_connected(node1, node2):
+            g.add_edge(node1, node2)
+            edge_count += 1
+    return g
+
+
+# Experiment 1
+def experiment1(num_nodes, num_edges, num_trials=100):
+    cycle_count = 0
+    for _ in range(num_trials):
+        G = create_random_graph(num_nodes, num_edges)
+        if has_cycle(G):
+            cycle_count += 1
+            
+    return cycle_count / num_trials
+
+def graph_and_run_experiment1():
+    num_nodes = 100
+    edge_counts = range(0, 200, 10)
+    probabilities = []
+
+    for num_edges in edge_counts:
+        prob = experiment1(num_nodes, num_edges)
+        probabilities.append(prob)
+
+    plt.plot(edge_counts, probabilities)
+    plt.xlabel('Number of Edges')
+    plt.ylabel('Probability of having a cycle')
+    plt.title('Number of Edges vs Cycle Probability')
+    plt.show()
+
+
 def main():
     # bfs2 and dfs2 test
     g = Graph(5)
@@ -124,8 +167,8 @@ def main():
     g.add_edge(1,4)
     g.add_edge(2,3)
     g.add_edge(3,4)
-    print(BFS2(g, 0, 4))
-    print(DFS2(g, 0, 4))
+    # print(BFS2(g, 0, 4))
+    # print(DFS2(g, 0, 4))
 
     # bfs3 and dfs3 test
     g = Graph(6)
@@ -136,8 +179,8 @@ def main():
     g.add_edge(2,3)
     g.add_edge(2,4)
     g.add_edge(3,4)
-    print(BFS3(g, 0))
-    print(DFS3(g, 0))
+    # print(BFS3(g, 0))
+    # print(DFS3(g, 0))
 
 
     # cycle is true test
@@ -147,14 +190,14 @@ def main():
     g.add_edge(2, 3)
     g.add_edge(3, 4)
     g.add_edge(4, 2)  # edge creates cycle
-    print(has_cycle(g))
+    # print(has_cycle(g))
 
     # cycle is false test
     g = Graph(4)
     g.add_edge(0, 1)
     g.add_edge(1, 2)
     g.add_edge(2, 3)
-    print(has_cycle(g))
+    # print(has_cycle(g))
 
 
     # is connected is true graph
@@ -162,12 +205,14 @@ def main():
     g.add_edge(0, 1)
     g.add_edge(1, 2)
     g.add_edge(2, 3)
-    print(is_connected(g))
+    # print(is_connected(g))
 
     # is connected is false graph
     g = Graph(4)
     g.add_edge(0, 1)
     g.add_edge(2, 3)
-    print(is_connected(g))
+    # print(is_connected(g))
+
+    graph_and_run_experiment1()
     
 main()
