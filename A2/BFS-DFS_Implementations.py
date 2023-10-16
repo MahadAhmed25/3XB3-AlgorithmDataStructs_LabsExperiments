@@ -145,7 +145,7 @@ def experiment1(num_nodes, num_edges, num_trials=100):
 
 def graph_and_run_experiment1():
     num_nodes = 100
-    edge_counts = range(0, 200, 10)
+    edge_counts = range(0, 200, 5)
     probabilities = []
 
     for num_edges in edge_counts:
