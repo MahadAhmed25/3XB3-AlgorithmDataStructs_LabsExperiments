@@ -89,6 +89,7 @@ def DFS3(g, node1):
     return predDict
 
 
+
 # https://www.geeksforgeeks.org/detect-cycle-undirected-graph/
 def has_cycle_util(G, node, visited, parent):
     visited[node] = True
@@ -134,7 +135,7 @@ def create_random_graph(i, j):
 
 
 # Experiment 1
-def experiment1(num_nodes, num_edges, num_trials=100):
+def experiment1(num_edges, num_nodes=100, num_trials=100):
     cycle_count = 0
     for _ in range(num_trials):
         G = create_random_graph(num_nodes, num_edges)
@@ -144,13 +145,13 @@ def experiment1(num_nodes, num_edges, num_trials=100):
     return cycle_count / num_trials
 
 def graph_and_run_experiment1():
-    num_nodes = 100
-    edge_counts = range(0, 200, 5)
+    edge_counts = []
     probabilities = []
 
-    for num_edges in edge_counts:
-        prob = experiment1(num_nodes, num_edges)
-        probabilities.append(prob)
+    for num_edges in range(0, 200, 5):
+        probability = experiment1(num_edges)
+        edge_counts.append(num_edges)
+        probabilities.append(probability)
 
     plt.plot(edge_counts, probabilities)
     plt.xlabel('Number of Edges')
@@ -179,8 +180,8 @@ def main():
     g.add_edge(2,3)
     g.add_edge(2,4)
     g.add_edge(3,4)
-    # print(BFS3(g, 0))
-    # print(DFS3(g, 0))
+    print(BFS3(g, 0))
+    print(DFS3(g, 0))
 
 
     # cycle is true test
