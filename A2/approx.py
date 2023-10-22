@@ -54,22 +54,7 @@ def approx1(G):
                 G.adjacent_nodes(i).remove(v)
                 
         
-        adjval = [value for value in G.adj.values()]
-
-        nested_list = adjval
-        flat_list = flatten_list(nested_list)
-
-        if (len(flat_list)==0):
-            c_val = True
-            break
-
-        if(set(c).issubset(flat_list)):
-            c_val= True
-            #print("In")
-
-        else:
-            c_val= False
-            #print("out")
+        c_val = vertex_cover(G.adj.copy(), c, G) 
             
     return(c)
     
@@ -129,21 +114,7 @@ def approx3(G):
             if (u in G.adjacent_nodes(i)):
                 G.adjacent_nodes(i).remove(u)
         
-        adjval = [value for value in G.adj.values()]
-        nested_list = adjval
-        flat_list = flatten_list(nested_list)
-
-        if (len(flat_list)==0):
-            c_val = True
-            break
-
-        if(set(c).issubset(flat_list)):
-            c_val= True
-            #print("In")
-
-        else:
-            c_val= False
-            #print("out")
+        c_val = vertex_cover(G.adj.copy(), c, G) 
 
 
     return c
