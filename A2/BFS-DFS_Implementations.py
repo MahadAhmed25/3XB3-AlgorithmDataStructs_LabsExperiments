@@ -159,6 +159,31 @@ def graph_and_run_experiment1():
     plt.title('Number of Edges vs Cycle Probability')
     plt.show()
 
+# Experiment 2
+def experiment2(num_edges, num_nodes=100, num_trials=100):
+    connected_graphs = 0
+    for _ in range(num_trials):
+        G = create_random_graph(num_nodes, num_edges)
+        if is_connected(G):
+            connected_graphs += 1
+            
+    return connected_graphs / num_trials
+
+def graph_and_run_experiment2():
+    edge_counts = []
+    probabilities = []
+
+    for num_edges in range(0, 200, 5):
+        probability = experiment2(num_edges)
+        edge_counts.append(num_edges)
+        probabilities.append(probability)
+
+    plt.plot(edge_counts, probabilities)
+    plt.xlabel('Number of Edges')
+    plt.ylabel('Probability of being connected')
+    plt.title('Number of Edges vs Probability of Connected Graph')
+    plt.show()
+
 
 def main():
     # bfs2 and dfs2 test
@@ -215,5 +240,6 @@ def main():
     # print(is_connected(g))
 
     graph_and_run_experiment1()
+    graph_and_run_experiment2()
     
 main()
