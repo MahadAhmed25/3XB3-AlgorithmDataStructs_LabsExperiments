@@ -37,34 +37,25 @@ def find_IS(G, v):
 
     return IS
 
-def ISvsVCExp1(m):
-    gList = []
+#Experiment 1 with 8 nodes and m edges
+def ISvsVCExp1(m, alg):
+    sum = 0
     for i in range (100): 
-        gList.append(createRandomGraph(8,m))
+        g = createRandomGraph(8, m)
+        sum += len(alg(g))
         
-    avgSumIS = 0
-    avgSumVC = 0
-    
-    for i in range (len(gList)):
-        avgSumIS += len(MIS(gList[i]))
-        avgSumVC += len(MVC(gList[i]))
-        
-    return [avgSumIS/100, avgSumVC/100]
+    return sum/100
 
-def ISvsVCExp2(m):
-    gList = []
+#Experiment 2 with m nodes and minimum number of edges (e=2)
+def ISvsVCExp2(m, alg):
+    sum = 0
     for i in range (100): 
-        gList.append(createRandomGraph(m,2))
+        g = createRandomGraph(m, 2)
+        sum += len(alg(g))
         
-    avgSumIS = 0
-    avgSumVC = 0
-    
-    for i in range (len(gList)):
-        avgSumIS += len(MIS(gList[i]))
-        avgSumVC += len(MVC(gList[i]))
-        
-    return [avgSumIS/100, avgSumVC/100]
+    return sum/100
 
+#Experiment 3 with m nodes and maximum number of edges (complete graph)
 def ISvsVCExp3(m, alg):
     sum = 0
     numEdges = (m*(m-1))/2
@@ -78,7 +69,10 @@ def ISvsVCExp3(m, alg):
 def graphexp1():
     results = []
     for i in range(1,26):
-        results.append(ISvsVCExp1(i))
+        x = []
+        x.append(ISvsVCExp1(i, MIS))
+        x.append(ISvsVCExp1(i, MVC))
+        results.append(x)
          
     isResults = [a[0] for a in results]
     vcResults = [a[1] for a in results]
@@ -89,30 +83,35 @@ def graphexp1():
     plt.plot(x1, vcResults, label = "MVC")
     plt.xlabel('Number of Edges')
     plt.ylabel('avg set size')
+    plt.title('MIS & MVC wrt #ofEdges vs avgSetSize')
     plt.legend()
     plt.show()
     
     
 def graphexp2():
-    results2 = []
-    for i in range(3,10):
-        results2.append(ISvsVCExp2(i))
+    results = []
+    for i in range(3,11):
+        x = []
+        x.append(ISvsVCExp2(i, MIS))
+        x.append(ISvsVCExp2(i, MVC))
+        results.append(x)
     
-    isResults2 = [a[0] for a in results2]
-    vcResults2 = [a[1] for a in results2]
-    x2 = [a for a in range(3,10)]
+    isResults2 = [a[0] for a in results]
+    vcResults2 = [a[1] for a in results]
+    x2 = [a for a in range(3,11)]
     
     plt.figure(2)
     plt.plot(x2, isResults2, label = "MIS")
     plt.plot(x2, vcResults2, label = "MVC")
     plt.xlabel('Number of Nodes')
     plt.ylabel('avg set size')
+    plt.title('MIS & MVC wrt #ofNodes vs avgSetSize with min edges')
     plt.legend()
     plt.show()
     
 def graphexp3():
     results = []
-    for i in range(3,10):
+    for i in range(3,11):
         x = []
         x.append(ISvsVCExp3(i, MIS))
         x.append(ISvsVCExp3(i, MVC))
@@ -120,19 +119,20 @@ def graphexp3():
     
     isResults = [a[0] for a in results]
     vcResults = [a[1] for a in results]
-    x2 = [a for a in range(3,10)]
+    x2 = [a for a in range(3,11)]
     
-    plt.figure(2)
+    plt.figure(3)
     plt.plot(x2, isResults, label = "MIS")
     plt.plot(x2, vcResults, label = "MVC")
     plt.xlabel('Number of Nodes')
     plt.ylabel('avg set size')
+    plt.title('MIS & MVC wrt #ofNodes vs avgSetSize with max edges')
     plt.legend()
     plt.show()
     
     
-# graphexp1()
-# graphexp2()
+graphexp1()
+graphexp2()
 graphexp3()
         
 
