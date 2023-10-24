@@ -18,53 +18,71 @@ def createRandomGraph(i, j):
             edge_count += 1
     return g
 
-def exp1(m):
-    gList = []
-    for i in range (100): 
-        gList.append(createRandomGraph(8,m))
-    gList2 = gList.copy()
-    gList3 = gList.copy()
-    gList4 = gList.copy()
-    
-    
-    mvcList = []
-    for i in range(len(gList)): mvcList.append(MVC(gList[i]))
-    mvcSum = 0
-    for i in range(len(mvcList)): mvcSum += len(mvcList[i])
-        
-    apx1 = 0
-    apx2 = 0
-    apx3 = 0
-    
-    for i in range(len(gList2)):
-        apx1 += len(approx1(gList2[i]))
-        apx2 += len(approx2(gList3[i]))
-        apx3 += len(approx3(gList4[i]))
-        
-        
-    return [apx1/mvcSum, apx2/mvcSum, apx3/mvcSum]
+def exp1(e, alg):
+    sum = 0
+    for i in range(100):
+        graph = createRandomGraph(8, e)
+        if len(MVC(graph)) == len(alg(graph)):
+            sum+=1
+    return sum/100
 
-def graphAndRunExp1():
+def exp2(n, alg):
+    sum = 0
+    for i in range(100):
+        graph = createRandomGraph(n, 3)
+        if len(MVC(graph)) == len(alg(graph)):
+            sum+=1
+    return sum/100
+
+def graphexp1():
     results = []
-    for i in range(1,25):
-        results.append(exp1(i))
+    for i in range (1,26):
+        x = []
+        x.append(exp1(i,approx1))
+        x.append(exp1(i,approx2))
+        x.append(exp1(i,approx3))
+        results.append(x)
+        
+    app1 = [a[0] for a in results]
+    app2 = [a[1] for a in results]
+    app3 = [a[2] for a in results]
+    x = [a for a in range(1,26)]
     
-    approx1 = [a[0] for a in results]
-    approx2 = [a[1] for a in results]
-    approx3 = [a[2] for a in results]
-    m = [a for a in range(1,25)]
-    
-    plt.plot(m, approx1, label = "approximation 1")
-    plt.plot(m, approx2, label = "approximation 2")
-    plt.plot(m, approx3, label = "approximation 3")
+    plt.plot(x, app1, label = "approximation 1")
+    plt.plot(x, app2, label = "approximation 2")
+    plt.plot(x, app3, label = "approximation 3")
     plt.xlabel('Number of Edges')
     plt.ylabel('expected performance')
     plt.title('Expected Performance of Vertex Cover Approximations vs. Graph Complexity')
+    plt.legend()
     plt.show()
     
+def graphexp2():
+    results = []
+    for i in range (3,11):
+        x = []
+        x.append(exp2(i,approx1))
+        x.append(exp2(i,approx2))
+        x.append(exp2(i,approx3))
+        results.append(x)
+        
+    app1 = [a[0] for a in results]
+    app2 = [a[1] for a in results]
+    app3 = [a[2] for a in results]
+    x = [a for a in range(3,11)]
     
-def main():
-    graphAndRunExp1()
+    plt.plot(x, app1, label = "approximation 1")
+    plt.plot(x, app2, label = "approximation 2")
+    plt.plot(x, app3, label = "approximation 3")
+    plt.xlabel('Number of Nodes')
+    plt.ylabel('expected performance')
+    plt.title('Expected Performance of Vertex Cover Approximations vs. Graph Complexity')
+    plt.legend()
+    plt.show()
     
-main()
+graphexp1()
+graphexp2()
+    
+
+        
         
