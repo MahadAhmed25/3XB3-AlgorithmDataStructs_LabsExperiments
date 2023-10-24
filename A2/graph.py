@@ -11,6 +11,9 @@ class Graph:
 
     def are_connected(self, node1, node2):
         return node2 in self.adj[node1]
+    
+    def adjacency_list(self):
+        return self.adj
 
     def adjacent_nodes(self, node):
         return self.adj[node]
@@ -82,7 +85,7 @@ def is_vertex_cover(G, C):
     return True
 
 def MVC(G):
-    nodes = [i for i in range(G.get_size())]
+    nodes = [i for i in range(G.number_of_nodes())]
     subsets = power_set(nodes)
     min_cover = nodes
     for subset in subsets:
