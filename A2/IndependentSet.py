@@ -65,22 +65,24 @@ def ISvsVCExp2(m):
         
     return [avgSumIS/100, avgSumVC/100]
 
-def graphAndRunExperiment():
+def ISvsVCExp3(m, alg):
+    sum = 0
+    numEdges = (m*(m-1))/2
+    for i in range (100): 
+        g = createRandomGraph(m, numEdges)
+        sum += len(alg(g))
+        
+    return sum/100
+        
+
+def graphexp1():
     results = []
     for i in range(1,26):
         results.append(ISvsVCExp1(i))
-        
-    results2 = []
-    for i in range(3,10):
-        results2.append(ISvsVCExp2(i))
-        
+         
     isResults = [a[0] for a in results]
     vcResults = [a[1] for a in results]
     x1 = [a for a in range(1,26)]
-    
-    isResults2 = [a[0] for a in results2]
-    vcResults2 = [a[1] for a in results2]
-    x2 = [a for a in range(3,10)]
     
     plt.figure(1)
     plt.plot(x1, isResults, label = "MIS")
@@ -90,6 +92,16 @@ def graphAndRunExperiment():
     plt.legend()
     plt.show()
     
+    
+def graphexp2():
+    results2 = []
+    for i in range(3,10):
+        results2.append(ISvsVCExp2(i))
+    
+    isResults2 = [a[0] for a in results2]
+    vcResults2 = [a[1] for a in results2]
+    x2 = [a for a in range(3,10)]
+    
     plt.figure(2)
     plt.plot(x2, isResults2, label = "MIS")
     plt.plot(x2, vcResults2, label = "MVC")
@@ -98,7 +110,29 @@ def graphAndRunExperiment():
     plt.legend()
     plt.show()
     
+def graphexp3():
+    results = []
+    for i in range(3,10):
+        x = []
+        x.append(ISvsVCExp3(i, MIS))
+        x.append(ISvsVCExp3(i, MVC))
+        results.append(x)
     
-graphAndRunExperiment()
+    isResults = [a[0] for a in results]
+    vcResults = [a[1] for a in results]
+    x2 = [a for a in range(3,10)]
+    
+    plt.figure(2)
+    plt.plot(x2, isResults, label = "MIS")
+    plt.plot(x2, vcResults, label = "MVC")
+    plt.xlabel('Number of Nodes')
+    plt.ylabel('avg set size')
+    plt.legend()
+    plt.show()
+    
+    
+# graphexp1()
+# graphexp2()
+graphexp3()
         
 
