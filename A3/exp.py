@@ -2,6 +2,39 @@ import time
 from knapsack import *
 import matplotlib.pyplot as plt
 
+def graph_and_run_experimentRBF(maxval_weight, capacity):
+    num_itemsrec=[]
+    run_timerec =[]
+
+    for current_items in range(10, 20, 5):
+        sack = create_knapsack(current_items, 1, maxval_weight, 1, maxval_weight)
+        start=0; end=0
+        start = time.time()
+        result = ks_rec(sack, capacity)
+        end = time.time()
+        num_itemsrec.append(current_items)
+        run_timerec.append(end-start)
+
+    num_itemsBF=[]
+    run_timeBF =[]
+    
+    for current_items in range(10, 20, 5):
+        sack = create_knapsack(current_items, 1, maxval_weight, 1, maxval_weight)
+        start=0; end=0
+        start = time.time()
+        result = ks_brute_force(sack, capacity)
+        end = time.time()
+        num_itemsBF.append(current_items)
+        run_timeBF.append(end-start)
+
+    plt.plot(num_itemsrec, run_timerec,color='r')
+    plt.plot(num_itemsBF, run_timeBF, color='g')
+
+    plt.legend(["Recursive", "Brute Force"], loc ="lower right")
+    plt.xlabel('Number of items in knapsack')
+    plt.ylabel('Time in seconds')
+    plt.title('Runtime vs Number of Items')
+    plt.show()
 
 def graph_and_run_experimentTDBT(maxval_weight, capacity):
     num_itemsBot=[]
