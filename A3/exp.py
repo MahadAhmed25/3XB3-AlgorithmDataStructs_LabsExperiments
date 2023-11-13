@@ -6,11 +6,11 @@ def graph_and_run_experimentRBF(maxval_weight, capacity):
     num_itemsrec=[]
     run_timerec =[]
 
-    for current_items in range(10, 20, 5):
+    for current_items in range(10, 100, 1):
         sack = create_knapsack(current_items, 1, maxval_weight, 1, maxval_weight)
         start=0; end=0
         start = time.time()
-        result = ks_rec(sack, capacity)
+        ks_rec(sack, capacity)
         end = time.time()
         num_itemsrec.append(current_items)
         run_timerec.append(end-start)
@@ -18,11 +18,11 @@ def graph_and_run_experimentRBF(maxval_weight, capacity):
     num_itemsBF=[]
     run_timeBF =[]
     
-    for current_items in range(10, 20, 5):
+    for current_items in range(10, 26, 1):
         sack = create_knapsack(current_items, 1, maxval_weight, 1, maxval_weight)
         start=0; end=0
         start = time.time()
-        result = ks_brute_force(sack, capacity)
+        ks_brute_force(sack, capacity)
         end = time.time()
         num_itemsBF.append(current_items)
         run_timeBF.append(end-start)
@@ -30,7 +30,7 @@ def graph_and_run_experimentRBF(maxval_weight, capacity):
     plt.plot(num_itemsrec, run_timerec,color='r')
     plt.plot(num_itemsBF, run_timeBF, color='g')
 
-    plt.legend(["Recursive", "Brute Force"], loc ="lower right")
+    plt.legend(["Recursive", "Brute Force"])
     plt.xlabel('Number of items in knapsack')
     plt.ylabel('Time in seconds')
     plt.title('Runtime vs Number of Items')
@@ -77,5 +77,5 @@ def graph_and_run_experimentTDBT(maxval_weight, capacity):
 
 
 
-#graph_and_run_experimentRBF(10,10)
-graph_and_run_experimentTDBT(300,80)
+graph_and_run_experimentRBF(10,10)
+#graph_and_run_experimentTDBT(300,80)
