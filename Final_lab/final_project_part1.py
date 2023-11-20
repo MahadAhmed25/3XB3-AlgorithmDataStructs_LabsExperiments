@@ -35,12 +35,12 @@ class DirectedWeightedGraph:
 def dijkstra(G, source):
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
     dist = {} #Distance dictionary
-    Q = min_heap.MinHeap([])
+    Q = min_heap2.MinHeap([])
     nodes = list(G.adj.keys())
 
     #Initialize priority queue/heap and distances
     for node in nodes:
-        Q.insert(min_heap.Element(node, float("inf")))
+        Q.insert(min_heap2.Element(node, float("inf")))
         dist[node] = float("inf")
     Q.decrease_key(source, 0)
 
@@ -114,3 +114,21 @@ def init_d(G):
                 d[i][j] = G.w(i, j)
         d[i][i] = 0
     return d
+
+def test_dijk():
+    print("-----Approx Alg 1 -----") 
+    graph1 = DirectedWeightedGraph()
+    for i in range(6):
+        graph1.add_node(i)#
+
+    graph1.add_edge(0,1,6)#
+    graph1.add_edge(0,2,1)
+    graph1.add_edge(1,4,2)#
+    graph1.add_edge(2,3,5)
+    graph1.add_edge(3,4,3)
+    graph1.add_edge(1,5,3)#
+    graph1.add_edge(1,3,1)#
+
+    print(dijkstra(graph1, 0))    
+
+test_dijk()
