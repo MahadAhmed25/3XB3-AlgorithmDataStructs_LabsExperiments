@@ -71,7 +71,7 @@ def bellman_ford(G, source):
     for _ in range(G.number_of_nodes()):
         for node in nodes:
             for neighbour in G.adj[node]:
-                if dist[neighbour] > dist[node] + G.w(node, neighbour):
+                if dist[neighbour] > dist[node] + G.w(node, neighbour): #
                     dist[neighbour] = dist[node] + G.w(node, neighbour)
                     pred[neighbour] = node
     return dist
@@ -115,20 +115,3 @@ def init_d(G):
         d[i][i] = 0
     return d
 
-def test_dijk():
-    print("-----Approx Alg 1 -----") 
-    graph1 = DirectedWeightedGraph()
-    for i in range(6):
-        graph1.add_node(i)#
-
-    graph1.add_edge(0,1,6)#
-    graph1.add_edge(0,2,1)
-    graph1.add_edge(1,4,2)#
-    graph1.add_edge(2,3,5)
-    graph1.add_edge(3,4,3)
-    graph1.add_edge(1,5,3)#
-    graph1.add_edge(1,3,1)#
-
-    print(dijkstra(graph1, 0))    
-
-test_dijk()
