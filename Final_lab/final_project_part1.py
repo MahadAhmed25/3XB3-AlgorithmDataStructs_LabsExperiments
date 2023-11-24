@@ -37,12 +37,14 @@ def dijkstra(G, source):
     dist = {} #Distance dictionary
     Q = min_heap2.MinHeap([])
     nodes = list(G.adj.keys())
+    sum=0
 
     #Initialize priority queue/heap and distances
     for node in nodes:
         Q.insert(min_heap2.Element(node, float("inf")))
         dist[node] = float("inf")
     Q.decrease_key(source, 0)
+    sum=sum+1
 
     #Meat of the algorithm
     while not Q.is_empty():
@@ -52,8 +54,10 @@ def dijkstra(G, source):
         for neighbour in G.adj[current_node]:
             if dist[current_node] + G.w(current_node, neighbour) < dist[neighbour]:
                 Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour))
+                sum=sum+1
                 dist[neighbour] = dist[current_node] + G.w(current_node, neighbour)
                 pred[neighbour] = current_node
+    print("alg1 total # of decreases: ", sum)
     return dist
 
 
