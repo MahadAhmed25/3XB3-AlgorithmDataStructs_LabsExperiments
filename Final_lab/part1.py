@@ -23,6 +23,8 @@ def dijkstra_approx(G, source, k):
     Q.decrease_key(source, 0)
     counter[source]=counter[source]+1
     total=total+1
+
+    
     
 
     #Meat of the algorithm
@@ -34,9 +36,10 @@ def dijkstra_approx(G, source, k):
             if dist[current_node] + G.w(current_node, neighbour) < dist[neighbour]:
                 if (counter[neighbour] <k):
                     Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour))
-
+                    
                     total=total+1
                     counter[neighbour]=counter[neighbour]+1
+                    #print(counter)
                     dist[neighbour] = dist[current_node] + G.w(current_node, neighbour)
                     pred[neighbour] = current_node
     
@@ -44,6 +47,79 @@ def dijkstra_approx(G, source, k):
     return dist
 
 
+
+def test_dijk():
+    print("-----Approx Alg 1 Dijk -----") 
+    graph2 = final_project_part1.DirectedWeightedGraph()
+    for i in range(10):
+        graph2.add_node(i)#
+
+    graph2.add_edge(0, 1, 10)#
+    graph2.add_edge(0,2, 1)
+    graph2.add_edge(1, 3, 1)#
+    graph2.add_edge(2,1, 1)
+    graph2.add_edge(2,3, 5)
+    graph2.add_edge(3,4, 1)
+
+    graph2.add_edge(2,4,2)
+    graph2.add_edge(3,5,1)
+
+    graph2.add_edge(4,5,1)
+    graph2.add_edge(1,9,1)
+    graph2.add_edge(5,7,3)
+    graph2.add_edge(4,6,3)
+    graph2.add_edge(6,7,1)
+    graph2.add_edge(7,9,1)
+    graph2.add_edge(6,8,1)
+    graph2.add_edge(9,8,20)
+    graph2.add_edge(3,6,1)
+    graph2.add_edge(5,6,4)
+  
+
+
+
+
+    print(final_project_part1.dijkstra(graph2, 0))    
+
+
+def testDijkApprox():
+    print("-----Approx Alg 2 Dijk-----") 
+    graph1 = final_project_part1.DirectedWeightedGraph()
+    for i in range(10):
+        graph1.add_node(i)#
+
+    graph1.add_edge(0, 1, 10)#
+    graph1.add_edge(0,2, 1)
+    graph1.add_edge(1, 3, 1)#
+    graph1.add_edge(2,1, 1)
+    graph1.add_edge(2,3, 5)
+    graph1.add_edge(3,4, 1)
+
+    graph1.add_edge(2,4,2)
+    graph1.add_edge(3,5,1)
+    
+    graph1.add_edge(4,5,1)
+    graph1.add_edge(1,9,1)
+    graph1.add_edge(5,7,3)
+    graph1.add_edge(4,6,3)
+    graph1.add_edge(6,7,1)
+    graph1.add_edge(7,9,1)
+    graph1.add_edge(6,8,1)
+    graph1.add_edge(9,8,20)
+    graph1.add_edge(3,6,1)
+    graph1.add_edge(5,6,4)
+
+
+    
+
+
+    print(dijkstra_approx(graph1, 0,2))    
+
+test_dijk()
+testDijkApprox()
+
+
+#-----------------------------------------------------------
 def bellman_ford_approx(G, source,k):
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
     dist = {} #Distance dictionary
@@ -78,40 +154,6 @@ def bellman_ford_approx(G, source,k):
     print("alg2 total # of decreases: ", total2)
     return dist
 
-
-def test_dijk():
-    print("-----Approx Alg 1 Dijk -----") 
-    graph2 = final_project_part1.DirectedWeightedGraph()
-    for i in range(5):
-        graph2.add_node(i)#
-
-    graph2.add_edge(0, 1, 10)#
-    graph2.add_edge(0,2, 1)
-    graph2.add_edge(1, 3, 1)#
-    graph2.add_edge(2,1, 1)
-    graph2.add_edge(2,3, 10)
-    graph2.add_edge(3,4, 1)
-
-
-    print(final_project_part1.dijkstra(graph2, 0))    
-
-
-def testDijkApprox():
-    print("-----Approx Alg 2 Dijk-----") 
-    graph1 = final_project_part1.DirectedWeightedGraph()
-    for i in range(5):
-        graph1.add_node(i)#
-
-    graph1.add_edge(0, 1, 10)#
-    graph1.add_edge(0,2, 1)
-    graph1.add_edge(1, 3, 1)#
-    graph1.add_edge(2,1, 1)
-    graph1.add_edge(2,3, 10)
-    graph1.add_edge(3,4, 1)
-
-    print(dijkstra_approx(graph1, 0,2))    
-
-
 def testBellmanApprox():
     print("-----Approx Alg 2 Bellman-----") 
     graph3 = final_project_part1.DirectedWeightedGraph()
@@ -142,10 +184,6 @@ def testBellman():
 
     print(final_project_part1.bellman_ford(graph4, 0))
 
+#testBellman()
 
-test_dijk()
-testDijkApprox()
-
-testBellman()
-
-testBellmanApprox()
+#testBellmanApprox()
