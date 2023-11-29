@@ -30,6 +30,10 @@ class DirectedWeightedGraph:
 
     def number_of_nodes(self):
         return len(self.adj)
+    
+    def print_adjacencyList(self):
+        for node, neighbors, in self.adj.items():
+            print(f"{node}: {', '.join([f'{neighbor}({self.w(node, neighbor)})' for neighbor in neighbors])}")
 
 
 def dijkstra(G, source):
@@ -59,6 +63,47 @@ def dijkstra(G, source):
                 pred[neighbour] = current_node
     print("alg1 total # of decreases: ", sum)
     return dist
+
+def dijkstra(G, source, destination):
+    pred = {}  # Predecessor dictionary. Isn't returned, but here for your understanding
+    dist = {}  # Distance dictionary
+    Q = min_heap2.MinHeap([])
+    nodes = list(G.adj.keys())
+    sum = 0
+
+    # Initialize priority queue/heap and distances
+    for node in nodes:
+        Q.insert(min_heap2.Element(node, float("inf")))
+        dist[node] = float("inf")
+    Q.decrease_key(source, 0)
+    sum += 1
+
+    # Meat of the algorithm
+    while not Q.is_empty():
+        current_element = Q.extract_min()
+        current_node = current_element.value
+        dist[current_node] = current_element.key
+
+        if current_node == destination:
+            # Reached the destination, construct and return the path
+            path = []
+            current_node = destination
+            while current_node in pred:
+                path.insert(0, current_node)
+                current_node = pred[current_node]
+            # Include the source node in the path
+            path.insert(0, source)
+            return path
+
+        for neighbour in G.adj[current_node]:
+            if dist[current_node] + G.w(current_node, neighbour) < dist[neighbour]:
+                Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour))
+                sum += 1
+                dist[neighbour] = dist[current_node] + G.w(current_node, neighbour)
+                pred[neighbour] = current_node
+                
+    # If destination is not reached, return an empty path
+    return []
 
 
 def bellman_ford(G, source):
@@ -119,3 +164,15 @@ def init_d(G):
         d[i][i] = 0
     return d
 
+
+
+
+G = DirectedWeightedGraph()
+G.add_node(0)
+G.add_node(1)
+G.add_node(2)
+G.add_edge(0,1,1)
+G.add_edge(1,2,1)
+G.print_adjacencyList()
+
+print(dijkstra(G, 0, 2))

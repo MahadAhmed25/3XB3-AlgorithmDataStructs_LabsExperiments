@@ -26,7 +26,7 @@ def a_star(G, s, d, h):
         for neighbour in G.adj[current_node]:
             g_score = dist[current_node] + G.w(current_node, neighbour)
             if g_score < dist[neighbour]:
-                f_score = g_score + h[neighbour]  # total cost: g_score + heuristic
+                f_score = g_score + h(current_node, neighbour)  # total cost: g_score + heuristic
                 Q.decrease_key(neighbour, f_score)
                 dist[neighbour] = g_score
                 pred[neighbour] = current_node
@@ -44,17 +44,20 @@ def a_star(G, s, d, h):
     return pred, path
 
 
-# Testing
-nodes = 20
-upper = 20
-G = create_random_complete_graph(nodes, upper)
-s = random.randint(0, nodes - 1)
-d = random.randint(0, nodes - 1)
-h = {node: 1 for node in range(nodes)}
-while d == s:  # making sure source and destination are not same
-    d = random.randint(0, nodes - 1)
+# # Testing
+# nodes = 20
+# upper = 20
+# G = create_random_complete_graph(nodes, upper)
+# s = random.randint(0, nodes - 1)
+# d = random.randint(0, nodes - 1)
 
-pred, path = a_star(G, s, d, h)
+# def h(node1, node2):
+#     return 1
+    
+# while d == s:  # making sure source and destination are not same
+#     d = random.randint(0, nodes - 1)
 
-print("Predecessor Dictionary:", pred)
-print("Shortest path from", s, "to", d, ":", path)
+# pred, path = a_star(G, s, d, h)
+
+# print("Predecessor Dictionary:", pred)
+# print("Shortest path from", s, "to", d, ":", path)
