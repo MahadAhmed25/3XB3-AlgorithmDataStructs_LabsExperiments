@@ -64,7 +64,7 @@ def dijkstra(G, source):
     print("alg1 total # of decreases: ", sum)
     return dist
 
-def dijkstra(G, source, destination):
+def dijkstraSP(G, source, destination):
     pred = {}  # Predecessor dictionary. Isn't returned, but here for your understanding
     dist = {}  # Distance dictionary
     Q = min_heap2.MinHeap([])
@@ -175,4 +175,4 @@ G.add_edge(0,1,1)
 G.add_edge(1,2,1)
 G.print_adjacencyList()
 
-print(dijkstra(G, 0, 2))
+print(dijkstraSP(G, 0, 2))
