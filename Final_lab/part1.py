@@ -44,6 +44,7 @@ def dijkstra_approx(G, source, k):
                     pred[neighbour] = current_node
     
     print("alg2 total # of decreases: ", total)
+    print("list of the number of decreases for each node: ", counter)
     return dist
 
 
@@ -51,69 +52,48 @@ def dijkstra_approx(G, source, k):
 def test_dijk():
     print("-----Approx Alg 1 Dijk -----") 
     graph2 = final_project_part1.DirectedWeightedGraph()
-    for i in range(10):
+    for i in range(7):
         graph2.add_node(i)#
 
-    graph2.add_edge(0, 1, 10)#
+    graph2.add_edge(0, 1, 3)#
     graph2.add_edge(0,2, 1)
-    graph2.add_edge(1, 3, 1)#
-    graph2.add_edge(2,1, 1)
-    graph2.add_edge(2,3, 5)
-    graph2.add_edge(3,4, 1)
+    graph2.add_edge(0, 6, 2)#
+    graph2.add_edge(1,3, 1)
+    graph2.add_edge(1,5, 1)
+    graph2.add_edge(2,1, 4)
+    graph2.add_edge(2,3,5)
+    graph2.add_edge(3,4,1)
+    graph2.add_edge(5,4,2)
+    graph2.add_edge(6,4,1)
 
-    graph2.add_edge(2,4,2)
-    graph2.add_edge(3,5,1)
-
-    graph2.add_edge(4,5,1)
-    graph2.add_edge(1,9,1)
-    graph2.add_edge(5,7,3)
-    graph2.add_edge(4,6,3)
-    graph2.add_edge(6,7,1)
-    graph2.add_edge(7,9,1)
-    graph2.add_edge(6,8,1)
-    graph2.add_edge(9,8,20)
-    graph2.add_edge(3,6,1)
-    graph2.add_edge(5,6,4)
+    G2 =final_project_part1.create_random_complete_graph(20,50)
+    
   
 
 
 
 
-    print(final_project_part1.dijkstra(graph2, 0))    
+    print(final_project_part1.dijkstra(G2, 0))    
 
 
 def testDijkApprox():
     print("-----Approx Alg 2 Dijk-----") 
     graph1 = final_project_part1.DirectedWeightedGraph()
-    for i in range(10):
+    for i in range(7):
         graph1.add_node(i)#
 
-    graph1.add_edge(0, 1, 10)#
+    graph1.add_edge(0, 1, 3)#
     graph1.add_edge(0,2, 1)
-    graph1.add_edge(1, 3, 1)#
-    graph1.add_edge(2,1, 1)
-    graph1.add_edge(2,3, 5)
-    graph1.add_edge(3,4, 1)
+    graph1.add_edge(0, 6, 2)#
+    graph1.add_edge(1,3, 1)
+    graph1.add_edge(1,5, 1)
+    graph1.add_edge(2,1, 4)
+    graph1.add_edge(2,3,5)
+    graph1.add_edge(3,4,1)
+    graph1.add_edge(5,4,2)
+    graph1.add_edge(6,4,1)
 
-    graph1.add_edge(2,4,2)
-    graph1.add_edge(3,5,1)
-    
-    graph1.add_edge(4,5,1)
-    graph1.add_edge(1,9,1)
-    graph1.add_edge(5,7,3)
-    graph1.add_edge(4,6,3)
-    graph1.add_edge(6,7,1)
-    graph1.add_edge(7,9,1)
-    graph1.add_edge(6,8,1)
-    graph1.add_edge(9,8,20)
-    graph1.add_edge(3,6,1)
-    graph1.add_edge(5,6,4)
-
-
-    
-
-
-    print(dijkstra_approx(graph1, 0,2))    
+    print(dijkstra_approx(graph1, 0,3))    
 
 test_dijk()
 testDijkApprox()
@@ -167,7 +147,7 @@ def testBellmanApprox():
     graph3.add_edge(2,3, 10)
     graph3.add_edge(3,4, 1)
 
-    print(bellman_ford_approx(graph3, 0,2))
+    print(bellman_ford_approx(graph3, 0,1))
 
 def testBellman():
     print("-----Approx Alg 2 Bellman-----") 

@@ -43,12 +43,17 @@ def dijkstra(G, source):
     nodes = list(G.adj.keys())
     sum=0
 
+    counter2=[]
+    for i in range(len(nodes)):
+        counter2.append(0)
+
     #Initialize priority queue/heap and distances
     for node in nodes:
         Q.insert(min_heap2.Element(node, float("inf")))
         dist[node] = float("inf")
     Q.decrease_key(source, 0)
     sum=sum+1
+    counter2[source]=counter2[source]+1
 
     #Meat of the algorithm
     while not Q.is_empty():
@@ -59,9 +64,11 @@ def dijkstra(G, source):
             if dist[current_node] + G.w(current_node, neighbour) < dist[neighbour]:
                 Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour))
                 sum=sum+1
+                counter2[neighbour]=counter2[neighbour]+1
                 dist[neighbour] = dist[current_node] + G.w(current_node, neighbour)
                 pred[neighbour] = current_node
     print("alg1 total # of decreases: ", sum)
+    print("list of the number of decreases for each node: ", counter2 )
     return dist
 
 def dijkstraSP(G, source, destination):
@@ -111,10 +118,14 @@ def bellman_ford(G, source):
     dist = {} #Distance dictionary
     nodes = list(G.adj.keys())
 
+    num_dec =0 
+    
+
     #Initialize distances
     for node in nodes:
         dist[node] = float("inf")
     dist[source] = 0
+    num_dec=num_dec+1
 
     #Meat of the algorithm
     for _ in range(G.number_of_nodes()):
@@ -123,6 +134,8 @@ def bellman_ford(G, source):
                 if dist[neighbour] > dist[node] + G.w(node, neighbour): #
                     dist[neighbour] = dist[node] + G.w(node, neighbour)
                     pred[neighbour] = node
+                    num_dec=num_dec+1
+    print("alg1 total # of decreases: ", num_dec)
     return dist
 
 
