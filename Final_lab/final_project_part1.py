@@ -42,6 +42,7 @@ def dijkstra(G, source):
     Q = min_heap2.MinHeap([])
     nodes = list(G.adj.keys())
     sum=0
+    max_iterations=0
 
     counter2=[]
     for i in range(len(nodes)):
@@ -67,9 +68,17 @@ def dijkstra(G, source):
                 counter2[neighbour]=counter2[neighbour]+1
                 dist[neighbour] = dist[current_node] + G.w(current_node, neighbour)
                 pred[neighbour] = current_node
-    print("alg1 total # of decreases: ", sum)
-    print("list of the number of decreases for each node: ", counter2 )
-    return dist
+    
+    for i in range(len(counter2)): #returns back the maximum number of decreases requried on any node
+        if counter2[i]> max_iterations:
+            max_iterations = counter2[i]
+
+
+    #print("alg1 total # of decreases: ", sum)
+    #print("Maximum number of decreases for any node: ", max_iterations)
+    #print("list of the number of decreases for each node: ", counter2 )
+    
+    return dist, max_iterations, counter2, sum
 
 def dijkstraSP(G, source, destination):
     pred = {}  # Predecessor dictionary. Isn't returned, but here for your understanding

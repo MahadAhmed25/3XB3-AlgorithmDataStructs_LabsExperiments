@@ -1,3 +1,4 @@
+from matplotlib import pyplot as plt
 import final_project_part1
 import min_heap2
 
@@ -11,6 +12,7 @@ def dijkstra_approx(G, source, k):
     counter=[]
     num_nodes = len(nodes)
     total=0
+    max_approx_iter=0
 
     for i in range(num_nodes):
         counter.append(0)
@@ -23,9 +25,6 @@ def dijkstra_approx(G, source, k):
     Q.decrease_key(source, 0)
     counter[source]=counter[source]+1
     total=total+1
-
-    
-    
 
     #Meat of the algorithm
     while not Q.is_empty():
@@ -43,60 +42,59 @@ def dijkstra_approx(G, source, k):
                     dist[neighbour] = dist[current_node] + G.w(current_node, neighbour)
                     pred[neighbour] = current_node
     
-    print("alg2 total # of decreases: ", total)
-    print("list of the number of decreases for each node: ", counter)
-    return dist
+    return dist, counter, total
 
 
 
-def test_dijk():
-    print("-----Approx Alg 1 Dijk -----") 
-    graph2 = final_project_part1.DirectedWeightedGraph()
-    for i in range(7):
-        graph2.add_node(i)#
-
-    graph2.add_edge(0, 1, 3)#
-    graph2.add_edge(0,2, 1)
-    graph2.add_edge(0, 6, 2)#
-    graph2.add_edge(1,3, 1)
-    graph2.add_edge(1,5, 1)
-    graph2.add_edge(2,1, 4)
-    graph2.add_edge(2,3,5)
-    graph2.add_edge(3,4,1)
-    graph2.add_edge(5,4,2)
-    graph2.add_edge(6,4,1)
+def exp1():
+    print("----- Dijkstra -----") 
 
     G2 =final_project_part1.create_random_complete_graph(20,50)
-    
-  
+    short_dist, max_iter, num_node_dec,total_dec =final_project_part1.dijkstra(G2, 0)
+
+    shortest_dist =[] 
+    decrease_num =[]
+
+    print("Disjkstra regular alg Graph's attributes: ")
+    print("Shortest distance from source to every other node: ", short_dist)
+    print("Maximum number of decreases required on any node: ", max_iter )
+    print("List of each node's number of times decreasing: ", num_node_dec)
+    print("Total number of decreases (just to cross check): ", total_dec, "\n")
+    dijkstra_dist = final_project_part1.total_dist(short_dist)
+    print(dijkstra_dist)  
+
+    decrease_num.append(max_iter)
+    shortest_dist.append(dijkstra_dist) 
+
+    total_dist =[] 
+    num_decreases =[]
+
+    for i in range(1, max_iter+1):
+       short_distapprox, num_node_decapprox, total_dec_approx = dijkstra_approx(G2, 0,i)
+       total_curr_dist = final_project_part1.total_dist(short_distapprox)
+
+       num_decreases.append(i)
+       total_dist.append(total_curr_dist)
+
+    print(num_decreases)
+    print(total_dist) 
+
+    return decrease_num, shortest_dist, num_decreases, total_dist 
 
 
+def graph_exp1():
+    x1,y1,x2,y2 =exp1()
 
+    plt.plot(x1, y1,color='r', marker='o')
+    plt.plot(x2, y2, color='g')
 
-    print(final_project_part1.dijkstra(G2, 0))    
+    plt.legend(["Dijkstra", "Dijkstra Approx"])
+    plt.xlabel('Number of decreases k')
+    plt.ylabel('Shortest Path')
+    plt.title('Dijkstra Approx number of keys vs shortest path')
+    plt.show()
 
-
-def testDijkApprox():
-    print("-----Approx Alg 2 Dijk-----") 
-    graph1 = final_project_part1.DirectedWeightedGraph()
-    for i in range(7):
-        graph1.add_node(i)#
-
-    graph1.add_edge(0, 1, 3)#
-    graph1.add_edge(0,2, 1)
-    graph1.add_edge(0, 6, 2)#
-    graph1.add_edge(1,3, 1)
-    graph1.add_edge(1,5, 1)
-    graph1.add_edge(2,1, 4)
-    graph1.add_edge(2,3,5)
-    graph1.add_edge(3,4,1)
-    graph1.add_edge(5,4,2)
-    graph1.add_edge(6,4,1)
-
-    print(dijkstra_approx(graph1, 0,3))    
-
-test_dijk()
-testDijkApprox()
+graph_exp1()
 
 
 #-----------------------------------------------------------
