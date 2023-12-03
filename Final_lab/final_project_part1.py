@@ -186,6 +186,26 @@ def init_d(G):
         d[i][i] = 0
     return d
 
+def test():
+    print("-----Approx Alg 2 Dijk-----") 
+    graph1 = DirectedWeightedGraph()
+    for i in range(8):
+        graph1.add_node(i)#
+
+    graph1.add_edge(0, 1, 3)#
+    graph1.add_edge(0,2, 1)
+    graph1.add_edge(0, 6, 2)#
+    graph1.add_edge(1,3, 1)
+    graph1.add_edge(1,5, 1)
+    graph1.add_edge(2,1, 4)
+    graph1.add_edge(2,3,5)
+    graph1.add_edge(3,4,1)
+    graph1.add_edge(5,4,2)
+    graph1.add_edge(6,4,1)
+    
+    print(mystery(graph1)) 
+
+test()
 
 
 
@@ -195,6 +215,6 @@ G.add_node(1)
 G.add_node(2)
 G.add_edge(0,1,1)
 G.add_edge(1,2,1)
-G.print_adjacencyList()
+#G.print_adjacencyList()
 
-print(dijkstraSP(G, 0, 2))
+#print(dijkstraSP(G, 0, 2))

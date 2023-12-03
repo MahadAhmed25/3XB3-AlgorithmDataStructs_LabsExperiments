@@ -45,8 +45,6 @@ def dijkstra_approx(G, source, k):
     
     return dist, counter, total
 
-
-
 def exp1():
     print("----- Dijkstra -----") 
 
@@ -97,6 +95,57 @@ def graph_exp1():
     plt.show()
 
 #graph_exp1()
+
+def exp2():
+
+    print("----- Exp2 using disjktra for this exp-----") 
+
+    G2 =final_project_part1.create_random_complete_graph(20,50)
+    short_dist, max_iter, num_node_dec,total_dec =final_project_part1.dijkstra(G2, 0)
+
+    shortest_dist =[] 
+    decrease_num =[]
+
+    print("Disjkstra regular alg Graph's attributes: ")
+    print("Shortest distance from source to every other node: ", short_dist)
+    print("Maximum number of decreases required on any node: ", max_iter )
+    print("List of each node's number of times decreasing: ", num_node_dec)
+    print("Total number of decreases (just to cross check): ", total_dec, "\n")
+    dijkstra_dist = final_project_part1.total_dist(short_dist)
+    print(dijkstra_dist)  
+
+    decrease_num.append(max_iter)
+    shortest_dist.append(dijkstra_dist) 
+
+    total_dist =[] 
+    num_decreases =[]
+
+    for i in range(1, max_iter+1):
+       short_distapprox, num_node_decapprox, total_dec_approx = dijkstra_approx(G2, 0,i)
+       total_curr_dist = final_project_part1.total_dist(short_distapprox)
+
+       num_decreases.append(i)
+       total_dist.append(total_curr_dist)
+
+    print(num_decreases)
+    print(total_dist) 
+
+
+    return decrease_num, shortest_dist, num_decreases, total_dist 
+
+
+def graph_exp2():
+    x1,y1,x2,y2 =exp1()
+
+    plt.plot(x1, y1,color='r', marker='o')
+    plt.plot(x2, y2, color='g')
+
+    plt.legend(["Dijkstra", "Dijkstra Approx"])
+    plt.xlabel('Number of decreases k')
+    plt.ylabel('Shortest Path')
+    plt.title('Dijkstra Approx number of keys vs shortest path')
+    plt.show()
+
 
 #-----------------------------------------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------------------------------------
