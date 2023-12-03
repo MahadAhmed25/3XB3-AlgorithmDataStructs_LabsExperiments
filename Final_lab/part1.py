@@ -1,3 +1,4 @@
+import random
 from matplotlib import pyplot as plt
 import final_project_part1
 import min_heap2
@@ -79,6 +80,7 @@ def exp1():
     print(num_decreases)
     print(total_dist) 
 
+
     return decrease_num, shortest_dist, num_decreases, total_dist 
 
 
@@ -94,10 +96,32 @@ def graph_exp1():
     plt.title('Dijkstra Approx number of keys vs shortest path')
     plt.show()
 
-graph_exp1()
+#graph_exp1()
+
+#-----------------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
+
+def create_random_complete_graph_negative(n,upper,lower):
+    G = final_project_part1.DirectedWeightedGraph()
+    for i in range(n):
+        G.add_node(i)
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                G.add_edge(i,j,random.randint(lower,upper))
+    return G
+
+def exp2():
+    print("\nBellmanFord")
+    G3 = create_random_complete_graph_negative(3,7,-3)
+    print(G3.print_adjacencyList())
+
+    print(final_project_part1.bellman_ford(G3, 0))
 
 
-#-----------------------------------------------------------
+
+exp2()
+
 def bellman_ford_approx(G, source,k):
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
     dist = {} #Distance dictionary
