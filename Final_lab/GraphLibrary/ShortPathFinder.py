@@ -11,6 +11,3 @@ class ShortPathFinder:
     
     def set_algorithm(self, algorithm):
         self.algorithm = algorithm
-
-    
-        

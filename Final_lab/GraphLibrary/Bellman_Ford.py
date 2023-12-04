@@ -1,5 +1,4 @@
-import SPAlgorithm
-import Final_lab.min_heap2 as mh
+from GraphLibrary.SPAlgorithm import SPAlgorithm
 
 class Bellman_Ford(SPAlgorithm):
     def __init__(self):

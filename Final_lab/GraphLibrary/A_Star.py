@@ -1,5 +1,5 @@
-import SPAlgorithm
-import Final_lab.min_heap2 as mh
+from GraphLibrary.SPAlgorithm import SPAlgorithm
+from GraphLibrary.min_heap2 import *
 
 class A_Star(SPAlgorithm):
     def __init__(self):
@@ -11,12 +11,12 @@ class A_Star(SPAlgorithm):
     def a_star(self, G, source, destination, h):
         pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
         dist = {} #Distance dictionary
-        Q = mh.MinHeap([])
+        Q = MinHeap([])
         nodes = list(G.adj.keys())
 
         #Initialize priority queue/heap and distances
         for node in nodes:
-            Q.insert(mh.Element(node, float("inf")))
+            Q.insert(Element(node, float("inf")))
             dist[node] = float("inf")
         Q.decrease_key(source, 0)
 
