@@ -18,14 +18,9 @@ class Graph():
                 return True
         return False
 
-    def add_edge(self, node1, node2, weight):
+    def add_edge(self, node1, node2):
         if node2 not in self.adj[node1]:
             self.adj[node1].append(node2)
-        self.weights[(node1, node2)] = weight
-
-    def w(self, node1, node2):
-        if self.are_connected(node1, node2):
-            return self.weights[(node1, node2)]
 
     def get_num_of_nodes(self):
         return len(self.adj)
@@ -34,6 +29,11 @@ class Graph():
 class WeightedGraph(Graph):
     def __init__(self):
         super().__init__()
+        
+    def add_edge(self, node1, node2, weight):
+        if node2 not in self.adj[node1]:
+            self.adj[node1].append(node2)
+        self.weights[(node1, node2)] = weight
     
     def w(self, node1, node2):
         if self.are_connected(node1, node2):
@@ -48,5 +48,7 @@ class HeuristicGraph(WeightedGraph):
     def get_heuristic(self):
         return self.heuristic
     
+    def set_heuristic(self, h):
+        self.heuristic = h
     
     
