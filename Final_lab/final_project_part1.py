@@ -227,9 +227,10 @@ def graph_and_run_experimentMystery(max_edge):
     plt.plot(num_itemsrec, run_timerec,color='r')
 
     plt.legend(["Mystery Algorithm Complexity"])
-    plt.xlabel('Number of Nodes')
-    plt.ylabel('Time in seconds')
+    plt.xlabel('Nodes')
+    plt.ylabel('Time')
     plt.title('Runtime vs Number of Nodes')
+    plt.loglog()
     plt.show()
 
 graph_and_run_experimentMystery(30)
