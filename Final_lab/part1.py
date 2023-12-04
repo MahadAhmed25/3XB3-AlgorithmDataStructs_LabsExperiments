@@ -94,82 +94,164 @@ def graph_exp1():
     plt.title('Dijkstra Approx number of keys vs shortest path')
     plt.show()
 
-#graph_exp1()
+graph_exp1()
+
+def random_graphgenerator(num_graphs, size_ofgraph, max_weight): #this func takes in # of graphs, size of them and max weights  to return back random full cycle graphs in a list
+    list_of_graphs=[]
+    for i in range(num_graphs):
+        list_of_graphs.append(final_project_part1.create_random_complete_graph(size_ofgraph, max_weight))
+        
+    return list_of_graphs
+
+def shortest_path_cost(list_of_graphs): #finds shortest path given a list of graphs
+    shortest_cost=[]
+    maxiters =[]
+    for i in range(len(list_of_graphs)):
+        shortest_dist=final_project_part1.dijkstra(list_of_graphs[i], 0) #stores dictionary of shortest path from non-approx function
+        maxiters.append(shortest_dist[1])
+        shortest_cost.append(final_project_part1.total_dist(shortest_dist[0])) #finds total disatnce given above shortest path dictionary
+    
+    return shortest_cost, maxiters
+
+def average_ratio_calc(table_array,row,column, shortest_object1):
+    total =[]
+    num_ofdec=[]
+
+    for i in range(column+1):
+        num_ofdec.append(0)
+
+
+    for i in range(len(shortest_object1)):
+        for j in range(shortest_object1[i]+1):
+            num_ofdec[j]=num_ofdec[j] + 1
+        
+
+    #print(num_ofdec)
+
+
+    for i in range(column):
+        total.append(0.0)
+
+    for i in range(column):
+        for j in range(row):
+            total[i] = total[i]+ table_array[j][i] 
+
+    for x in range(len(total)):
+        total[x] = total[x]/num_ofdec[x+1]
+        
+    return total
+
+
+
+def k_increments_path(list_of_graphs,shortest_object): #this function takes a list of graphs, sends back the length of path 
+    
+    maxval= max(shortest_object[1])
+    
+    #print(shortest_object[1][6])
+    #print(maxval)
+    
+
+    #each_ratio = [ [0]*maxval for i in range(maxval)]   
+    each_ratio = arr = [[0 for i in range(maxval)] for j in range(len(list_of_graphs))] 
+
+    for j in range(len(list_of_graphs)):
+        for i in range(1, shortest_object[1][j]+1):
+            short_distapprox, num_node_decapprox, total_dec_approx = dijkstra_approx(list_of_graphs[j], 0,i)
+            total_curr_dist = final_project_part1.total_dist(short_distapprox)
+            #print(each_ratio[j][i-1])
+            each_ratio[j][i-1]= (total_curr_dist/ shortest_object[0][j])
+
+    #print("New ratios: ", each_ratio)
+    #print()
+
+    ratio_lists=average_ratio_calc(each_ratio,len(list_of_graphs),maxval,shortest_object[1])
+
+
+    return ratio_lists
+
+
 
 def exp2():
+    print("----- Exp2 Using Disjktra-----") 
 
-    print("----- Exp2 using disjktra for this exp-----") 
+    set1 = random_graphgenerator(10,10,50) #list of 10 random graphs, sized with  nodes 
+    set2 = random_graphgenerator(10,25,50) #list of 10 random graphs, sized with  nodes
+    set3 = random_graphgenerator(10,40,50) #list of 10 random graphs, sized with  nodes
+    set4 = random_graphgenerator(10,55,50) #list of 10 random graphs, sized with  nodes
+    set5 = random_graphgenerator(10,70,50) #list of 10 random graphs, sized with  nodes
 
-    G2 =final_project_part1.create_random_complete_graph(20,50)
-    short_dist, max_iter, num_node_dec,total_dec =final_project_part1.dijkstra(G2, 0)
+    shortest_1=shortest_path_cost(set1)
+    shortest_2=shortest_path_cost(set2)
+    shortest_3=shortest_path_cost(set3)
+    shortest_4=shortest_path_cost(set4)
+    shortest_5=shortest_path_cost(set5)
 
-    shortest_dist =[] 
-    decrease_num =[]
+    #print((shortest_1[1]))  
+    #print((shortest_2[1]))
+    #print((shortest_3[1])) 
+    #print((shortest_4[1])) 
+    #print((shortest_5[1])) 
 
-    print("Disjkstra regular alg Graph's attributes: ")
-    print("Shortest distance from source to every other node: ", short_dist)
-    print("Maximum number of decreases required on any node: ", max_iter )
-    print("List of each node's number of times decreasing: ", num_node_dec)
-    print("Total number of decreases (just to cross check): ", total_dec, "\n")
-    dijkstra_dist = final_project_part1.total_dist(short_dist)
-    print(dijkstra_dist)  
+    #print((shortest_3[0])) 
 
-    decrease_num.append(max_iter)
-    shortest_dist.append(dijkstra_dist) 
+    ratio_list1 = k_increments_path(set1,shortest_1)
+    ratio_list2 = k_increments_path(set2,shortest_2)
+    ratio_list3 = k_increments_path(set3,shortest_3)
+    ratio_list4 = k_increments_path(set4,shortest_4)
+    ratio_list5 = k_increments_path(set5,shortest_5)
 
-    total_dist =[] 
-    num_decreases =[]
-
-    for i in range(1, max_iter+1):
-       short_distapprox, num_node_decapprox, total_dec_approx = dijkstra_approx(G2, 0,i)
-       total_curr_dist = final_project_part1.total_dist(short_distapprox)
-
-       num_decreases.append(i)
-       total_dist.append(total_curr_dist)
-
-    print(num_decreases)
-    print(total_dist) 
+    print(ratio_list1)  
+    print(ratio_list2) 
+    print(ratio_list3) 
+    print(ratio_list4) 
+    print(ratio_list5) 
 
 
-    return decrease_num, shortest_dist, num_decreases, total_dist 
+    maxdec= max(shortest_5[1])
+    
+
+    return ratio_list1, ratio_list2 ,ratio_list3 ,ratio_list4, ratio_list5, maxdec
+    
 
 
 def graph_exp2():
-    x1,y1,x2,y2 =exp1()
+    y1,y2,y3,y4,y5,k =exp2()
+    
+    x1=[]
+    x2=[]
+    x3=[]
+    x4=[]
+    x5=[]
 
-    plt.plot(x1, y1,color='r', marker='o')
-    plt.plot(x2, y2, color='g')
+    for i in range(len(y1)):
+        x1.append(i+1)
+    for i in range(len(y2)):
+        x2.append(i+1)
+    for i in range(len(y3)):
+        x3.append(i+1)
+    for i in range(len(y4)):
+        x4.append(i+1)
+    for i in range(len(y5)):
+        x5.append(i+1)
 
-    plt.legend(["Dijkstra", "Dijkstra Approx"])
+
+    plt.plot(x1, y1)
+    plt.plot(x2, y2)
+    plt.plot(x3, y3)
+    plt.plot(x4, y4)
+    plt.plot(x5, y5)
+
+    plt.legend(["Graph size 10 Nodes", "Graph size 25 Nodes","Graph size 40 Nodes","Graph size 55 Nodes","Graph size 70 Nodes" ])
     plt.xlabel('Number of decreases k')
-    plt.ylabel('Shortest Path')
-    plt.title('Dijkstra Approx number of keys vs shortest path')
+    plt.ylabel('Ratio to shortest path')
+    plt.title('Dijkstra Approx number of keys vs ratio')
     plt.show()
 
+graph_exp2()
+
 
 #-----------------------------------------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------------------------------------
-
-def create_random_complete_graph_negative(n,upper,lower):
-    G = final_project_part1.DirectedWeightedGraph()
-    for i in range(n):
-        G.add_node(i)
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                G.add_edge(i,j,random.randint(lower,upper))
-    return G
-
-def exp2():
-    print("\nBellmanFord")
-    G3 = create_random_complete_graph_negative(3,7,-3)
-    print(G3.print_adjacencyList())
-
-    print(final_project_part1.bellman_ford(G3, 0))
-
-
-
-exp2()
 
 def bellman_ford_approx(G, source,k):
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding

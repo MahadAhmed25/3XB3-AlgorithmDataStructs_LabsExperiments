@@ -205,7 +205,7 @@ def test():
     
     print(mystery(graph1)) 
 
-test()
+#test()
 
 
 
