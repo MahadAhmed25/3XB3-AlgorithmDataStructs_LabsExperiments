@@ -1,26 +1,27 @@
 def bsp_value(L, m):
+    n = len(L)
 
-    def is_feasible(mid):
-        removed_elements, last = 0, L[0]
-        for i in range(1, len(L)):
-            if L[i] - last < mid:
-                removed_elements += 1
-            else:
-                last = L[i] # update last because this eleemnt not removed
-            
-            if removed_elements > m:
-                return False # can return false becasue if more than m elements removed => mid is not feasible
-        return True
+    # dp[i][j] stores max minimum distance for first i stations with j stations removed (soln achieved w the help of chatgpt)
+    dp = [[0 for _ in range(m+1)] for _ in range(n)]
 
-    # Doing a binary search to find max feasible distance
-    low, high = 0, L[-1] - L[0]
-    while low < high:
-        mid = (low + high + 1) // 2 # midpoint
-        if is_feasible(mid): # if feasible distance then we can move the lower bound up
-            low = mid
-        else: # else decrease upper bound
-            high = mid - 1
-    return low
+    # Fill table for base cases
+    for i in range(1, n):
+        dp[i][0] = L[i] - L[i-1]
+
+    # fillng table
+    for j in range(1, m+1):
+        for i in range(1, n):
+            min_dist = float('inf')
+            for k in range(1, i+1):
+                # check distance if kth station is removed
+                dist = dp[k-1][j-1]
+                if i > k:
+                    dist = min(dist, L[i] - L[k])
+                min_dist = min(min_dist, dist)
+            dp[i][j] = min_dist
+
+    # nswer is max of the minimum distances
+    return max(dp[-1])
 
 
 def bsp_solution(L, m):
