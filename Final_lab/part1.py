@@ -1,13 +1,16 @@
 import random
 from matplotlib import pyplot as plt
 import final_project_part1
-import min_heap2
+#import min_heap2
+from GraphLibrary.min_heap2 import * 
+
+
 
 
 def dijkstra_approx(G, source, k):
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
     dist = {} #Distance dictionary
-    Q = min_heap2.MinHeap([])
+    Q = MinHeap([])
     nodes = list(G.adj.keys())
     
     counter=[]
@@ -21,7 +24,7 @@ def dijkstra_approx(G, source, k):
 
     #Initialize priority queue/heap and distances
     for node in nodes:
-        Q.insert(min_heap2.Element(node, float("inf")))
+        Q.insert(Element(node, float("inf")))
         dist[node] = float("inf")
     Q.decrease_key(source, 0)
     counter[source]=counter[source]+1
