@@ -1,3 +1,6 @@
+import time
+
+from matplotlib import pyplot as plt
 from GraphLibrary.min_heap2 import *
 import random
 
@@ -207,42 +210,29 @@ def test():
 
 #test()
 
-"""def graph_and_run_experimentMystery(max_edge, capacity):
+def graph_and_run_experimentMystery(max_edge):
     num_itemsrec=[]
     run_timerec =[]
 
     for current_items in range(10, 100, 1):
         G2 = create_random_complete_graph(current_items,max_edge)
-
-        sack = create_knapsack(current_items, 1, maxval_weight, 1, maxval_weight)
         start=0; end=0
         start = time.time()
-        ks_rec(sack, capacity)
+        mystery(G2)
         end = time.time()
         num_itemsrec.append(current_items)
         run_timerec.append(end-start)
-
-    num_itemsBF=[]
-    run_timeBF =[]
-    
-    for current_items in range(10, 26, 1):
-        sack = create_knapsack(current_items, 1, maxval_weight, 1, maxval_weight)
-        start=0; end=0
-        start = time.time()
-        ks_brute_force(sack, capacity)
-        end = time.time()
-        num_itemsBF.append(current_items)
-        run_timeBF.append(end-start)
+        
 
     plt.plot(num_itemsrec, run_timerec,color='r')
-    plt.plot(num_itemsBF, run_timeBF, color='g')
 
-    plt.legend(["Recursive", "Brute Force"])
-    plt.xlabel('Number of items in knapsack')
+    plt.legend(["Mystery Algorithm Complexity"])
+    plt.xlabel('Number of Nodes')
     plt.ylabel('Time in seconds')
-    plt.title('Runtime vs Number of Items')
-    plt.show()"""
+    plt.title('Runtime vs Number of Nodes')
+    plt.show()
 
+graph_and_run_experimentMystery(30)
 
 G = DirectedWeightedGraph()
 G.add_node(0)
