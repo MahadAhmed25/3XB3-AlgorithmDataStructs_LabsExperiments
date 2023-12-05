@@ -1,7 +1,8 @@
+# source used for help: https://www.geeksforgeeks.org/egg-dropping-puzzle-dp-11/
 def bsp_value(L, m):
     n = len(L)
 
-    # dp[i][j] stores max minimum distance for first i stations with j stations removed (soln achieved w the help of chatgpt)
+    # dp[i][j] stores max minimum distance for first i stations with j stations removed
     dp = [[0 for _ in range(m+1)] for _ in range(n)]
 
     # Fill table for base cases
@@ -11,14 +12,13 @@ def bsp_value(L, m):
     # fillng table
     for j in range(1, m+1):
         for i in range(1, n):
-            min_dist = float('inf')
+            dp[i][j] = float('inf')
             for k in range(1, i+1):
                 # check distance if kth station is removed
                 dist = dp[k-1][j-1]
                 if i > k:
                     dist = min(dist, L[i] - L[k])
-                min_dist = min(min_dist, dist)
-            dp[i][j] = min_dist
+                dp[i][j] = dist
 
     # nswer is max of the minimum distances
     return max(dp[-1])
