@@ -48,6 +48,76 @@ def dijkstra_approx(G, source, k):
     
     return dist, counter, total
 
+#-----------------------------------------------------------------------------------------------------------------------
+#Bellman Ford Approx Implmentations
+
+def bellman_ford_approx(G, source,k):
+    pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
+    dist = {} #Distance dictionary
+    nodes = list(G.adj.keys())
+    
+    counter2=[]
+    num_nodes = len(nodes)
+    total2=0
+
+    for i in range(num_nodes):
+        counter2.append(0)
+
+    #Initialize distances
+    for node in nodes:
+        dist[node] = float("inf")
+    dist[source] = 0
+
+    counter2[source]=counter2[source]+1
+    total2=total2+1
+
+    #Meat of the algorithm
+    for _ in range(G.number_of_nodes()):
+        for node in nodes:
+            for neighbour in G.adj[node]:
+                if dist[neighbour] > dist[node] + G.w(node, neighbour): #
+                    if (counter2[neighbour] <k):
+                        total2=total2+1
+                        counter2[neighbour]=counter2[neighbour]+1
+
+                        dist[neighbour] = dist[node] + G.w(node, neighbour)
+                        pred[neighbour] = node
+    print("alg2 total # of decreases: ", total2)
+    return dist
+
+def testBellmanApprox():
+    print("-----Approx Alg 2 Bellman-----") 
+    graph3 = final_project_part1.DirectedWeightedGraph()
+    for i in range(5):
+        graph3.add_node(i)#
+
+    graph3.add_edge(0, 1, 10)#
+    graph3.add_edge(0,2, 1)
+    graph3.add_edge(1, 3, 1)#
+    graph3.add_edge(2,1, 1)
+    graph3.add_edge(2,3, 10)
+    graph3.add_edge(3,4, 1)
+
+    print(bellman_ford_approx(graph3, 0,1))
+
+def testBellman():
+    print("-----Approx Alg 2 Bellman-----") 
+    graph4 = final_project_part1.DirectedWeightedGraph()
+    for i in range(5):
+        graph4.add_node(i)#
+
+    graph4.add_edge(0, 1, 10)#
+    graph4.add_edge(0,2, 1)
+    graph4.add_edge(1, 3, 1)#
+    graph4.add_edge(2,1, 1)
+    graph4.add_edge(2,3, 10)
+    graph4.add_edge(3,4, 1)
+
+    print(final_project_part1.bellman_ford(graph4, 0))
+
+#testBellman()
+#testBellmanApprox()
+
 #-------------------------------------------------------------------------------------------------------
 #Exp 1
 def exp1():
@@ -326,72 +396,3 @@ def graph_exp3():
 
 graph_exp3()
 
-#-----------------------------------------------------------------------------------------------------------------------
-#Bellman Ford Approx Implmentations
-
-def bellman_ford_approx(G, source,k):
-    pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
-    dist = {} #Distance dictionary
-    nodes = list(G.adj.keys())
-    
-    counter2=[]
-    num_nodes = len(nodes)
-    total2=0
-
-    for i in range(num_nodes):
-        counter2.append(0)
-
-    #Initialize distances
-    for node in nodes:
-        dist[node] = float("inf")
-    dist[source] = 0
-
-    counter2[source]=counter2[source]+1
-    total2=total2+1
-
-    #Meat of the algorithm
-    for _ in range(G.number_of_nodes()):
-        for node in nodes:
-            for neighbour in G.adj[node]:
-                if dist[neighbour] > dist[node] + G.w(node, neighbour): #
-                    if (counter2[neighbour] <k):
-                        total2=total2+1
-                        counter2[neighbour]=counter2[neighbour]+1
-
-                        dist[neighbour] = dist[node] + G.w(node, neighbour)
-                        pred[neighbour] = node
-    print("alg2 total # of decreases: ", total2)
-    return dist
-
-def testBellmanApprox():
-    print("-----Approx Alg 2 Bellman-----") 
-    graph3 = final_project_part1.DirectedWeightedGraph()
-    for i in range(5):
-        graph3.add_node(i)#
-
-    graph3.add_edge(0, 1, 10)#
-    graph3.add_edge(0,2, 1)
-    graph3.add_edge(1, 3, 1)#
-    graph3.add_edge(2,1, 1)
-    graph3.add_edge(2,3, 10)
-    graph3.add_edge(3,4, 1)
-
-    print(bellman_ford_approx(graph3, 0,1))
-
-def testBellman():
-    print("-----Approx Alg 2 Bellman-----") 
-    graph4 = final_project_part1.DirectedWeightedGraph()
-    for i in range(5):
-        graph4.add_node(i)#
-
-    graph4.add_edge(0, 1, 10)#
-    graph4.add_edge(0,2, 1)
-    graph4.add_edge(1, 3, 1)#
-    graph4.add_edge(2,1, 1)
-    graph4.add_edge(2,3, 10)
-    graph4.add_edge(3,4, 1)
-
-    print(final_project_part1.bellman_ford(graph4, 0))
-
-#testBellman()
-#testBellmanApprox()
