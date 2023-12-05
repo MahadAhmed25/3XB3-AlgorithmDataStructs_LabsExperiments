@@ -233,7 +233,7 @@ def graph_and_run_experimentMystery(max_edge):
     plt.loglog()
     plt.show()
 
-graph_and_run_experimentMystery(30)
+#graph_and_run_experimentMystery(30)
 
 G = DirectedWeightedGraph()
 G.add_node(0)

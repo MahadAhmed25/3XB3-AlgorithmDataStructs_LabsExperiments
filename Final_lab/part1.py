@@ -1,12 +1,12 @@
 import random
 from matplotlib import pyplot as plt
+import numpy as np
 import final_project_part1
 #import min_heap2
 from GraphLibrary.min_heap2 import * 
 
 
-
-
+#Dijkstra approx alg
 def dijkstra_approx(G, source, k):
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
     dist = {} #Distance dictionary
@@ -48,6 +48,8 @@ def dijkstra_approx(G, source, k):
     
     return dist, counter, total
 
+#-------------------------------------------------------------------------------------------------------
+#Exp 1
 def exp1():
     print("----- Dijkstra -----") 
 
@@ -97,8 +99,10 @@ def graph_exp1():
     plt.title('Dijkstra Approx number of keys vs shortest path')
     plt.show()
 
-graph_exp1()
+#graph_exp1()
 
+#-------------------------------------------------------------------------------------------------------
+#Exp 2
 def random_graphgenerator(num_graphs, size_ofgraph, max_weight): #this func takes in # of graphs, size of them and max weights  to return back random full cycle graphs in a list
     list_of_graphs=[]
     for i in range(num_graphs):
@@ -164,14 +168,11 @@ def k_increments_path(list_of_graphs,shortest_object): #this function takes a li
             #print(each_ratio[j][i-1])
             each_ratio[j][i-1]= (total_curr_dist/ shortest_object[0][j])
 
-    #print("New ratios: ", each_ratio)
-    #print()
 
     ratio_lists=average_ratio_calc(each_ratio,len(list_of_graphs),maxval,shortest_object[1])
 
 
     return ratio_lists
-
 
 
 def exp2():
@@ -215,8 +216,6 @@ def exp2():
 
     return ratio_list1, ratio_list2 ,ratio_list3 ,ratio_list4, ratio_list5, maxdec
     
-
-
 def graph_exp2():
     y1,y2,y3,y4,y5,k =exp2()
     
@@ -237,7 +236,6 @@ def graph_exp2():
     for i in range(len(y5)):
         x5.append(i+1)
 
-
     plt.plot(x1, y1)
     plt.plot(x2, y2)
     plt.plot(x3, y3)
@@ -250,11 +248,86 @@ def graph_exp2():
     plt.title('Dijkstra Approx number of keys vs ratio')
     plt.show()
 
-graph_exp2()
+#graph_exp2()
 
+#-------------------------------------------------------------------------------------------------------
+#Exp 3
+def exp3():
+    print("----- Exp3 Using Disjktra-----") 
+    dec_1_dis =[]
+    dec_2_dis =[]
+    dec_3_dis =[]
+    dec_4_dis =[]
+
+    exp3_graph = final_project_part1.DirectedWeightedGraph()
+    for i in range(8):
+        exp3_graph.add_node(i)#
+
+    exp3_graph.add_edge(0, 1, 8)
+    exp3_graph.add_edge(0, 2, 4)
+    exp3_graph.add_edge(0, 3, 16)
+    exp3_graph.add_edge(0, 4, 16)
+    exp3_graph.add_edge(0, 5, 20)
+    exp3_graph.add_edge(0, 6, 2)
+    exp3_graph.add_edge(0, 7, 5)
+
+    for i in range(1, 4):
+       short_distapprox, num_node_decapprox, total_dec_approx = dijkstra_approx(exp3_graph, 0,i)
+       total_curr_dist = final_project_part1.total_dist(short_distapprox)
+       dec_1_dis.append(total_curr_dist)
+
+    exp3_graph.add_edge(1, 0, 15)
+    exp3_graph.add_edge(1, 2, 1)
+    exp3_graph.add_edge(1, 3, 11)
+    exp3_graph.add_edge(1, 4, 1)
+    exp3_graph.add_edge(1, 5, 5)
+    exp3_graph.add_edge(1, 6, 16)
+    exp3_graph.add_edge(1, 7, 9)
+
+    for i in range(1, 4):
+       short_distapprox, num_node_decapprox, total_dec_approx = dijkstra_approx(exp3_graph, 0,i)
+       total_curr_dist = final_project_part1.total_dist(short_distapprox)
+       dec_2_dis.append(total_curr_dist)
+
+    exp3_graph.add_edge(2, 0, 13)
+    exp3_graph.add_edge(2, 1, 7)
+    exp3_graph.add_edge(2, 3, 6)
+    exp3_graph.add_edge(2, 4, 7)
+    exp3_graph.add_edge(2, 5, 15)
+    exp3_graph.add_edge(2, 6, 4)
+    exp3_graph.add_edge(2, 7, 4)
+
+    for i in range(1, 4):
+       short_distapprox, num_node_decapprox, total_dec_approx = dijkstra_approx(exp3_graph, 0,i)
+       total_curr_dist = final_project_part1.total_dist(short_distapprox)
+       dec_3_dis.append(total_curr_dist) 
+
+    return dec_1_dis, dec_2_dis, dec_3_dis
+
+print(exp3())
+
+def graph_exp3():
+    y1,y2,y3=exp3()
+
+    x1=[1,2,3]
+    x2=[1,2,3]
+    x3=[1,2,3]
+
+    plt.plot(x1, y1)
+    plt.plot(x2, y2)
+    plt.plot(x3, y3)
+
+    plt.xticks(np.arange(1, 4, step=1))
+    plt.legend(["Density 1/3", "Density 2/3","Dense"])
+    plt.xlabel('Number of decreases k')
+    plt.ylabel('Total shortest path')
+    plt.title('Dijkstra Approx number of relaxations vs total shortest path')
+    plt.show()
+
+graph_exp3()
 
 #-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+#Bellman Ford Approx Implmentations
 
 def bellman_ford_approx(G, source,k):
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
@@ -321,5 +394,4 @@ def testBellman():
     print(final_project_part1.bellman_ford(graph4, 0))
 
 #testBellman()
-
 #testBellmanApprox()
