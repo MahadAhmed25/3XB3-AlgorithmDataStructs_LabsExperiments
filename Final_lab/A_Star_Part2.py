@@ -1,6 +1,6 @@
 import random
 from final_project_part1 import create_random_complete_graph
-import min_heap2
+from GraphLibrary import min_heap2
 
 def a_star(G, s, d, h):
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding

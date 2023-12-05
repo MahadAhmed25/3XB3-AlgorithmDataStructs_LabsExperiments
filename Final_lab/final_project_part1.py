@@ -233,14 +233,16 @@ def graph_and_run_experimentMystery(max_edge):
     plt.loglog()
     plt.show()
 
-#graph_and_run_experimentMystery(30)
 
-G = DirectedWeightedGraph()
-G.add_node(0)
-G.add_node(1)
-G.add_node(2)
-G.add_edge(0,1,1)
-G.add_edge(1,2,1)
-#G.print_adjacencyList()
+if __name__ == "__main__":
+    graph_and_run_experimentMystery(30)
 
-#print(dijkstraSP(G, 0, 2))
+    G = DirectedWeightedGraph()
+    G.add_node(0)
+    G.add_node(1)
+    G.add_node(2)
+    G.add_edge(0,1,1)
+    G.add_edge(1,2,1)
+    #G.print_adjacencyList()
+
+    #print(dijkstraSP(G, 0, 2))

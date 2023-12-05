@@ -3,10 +3,14 @@ import math
 import csv
 from pathlib import Path
 import final_project_part1 as graph
-from A_Star import a_star
+from A_Star_Part2 import a_star
+from GraphLibrary.ShortPathFinder import ShortPathFinder
+from GraphLibrary.Graph import HeuristicGraph
+from GraphLibrary.A_Star import A_Star
+from GraphLibrary.Dijkstra import Dijsktra
 import time
 import matplotlib.pyplot as plt
-import matplotlib as mpl
+import numpy
 
 def loadStations(filename):
     filename = Path(__file__).with_name(filename)
@@ -46,7 +50,7 @@ def distance(lat1, lon1, lat2, lon2):
     return (R * c) * 1000 #convert to meters
 
 def buildGraph(stations, conn):
-    G = graph.DirectedWeightedGraph()
+    G = HeuristicGraph()
     
     for station_id, _ in stations.items():
         G.add_node(station_id)
@@ -57,46 +61,204 @@ def buildGraph(stations, conn):
         weight = connection['time']
         
         G.add_edge(s1,s2,weight)
+        G.add_edge(s2,s1,weight)
         
     return G
 
-def heuristic(station1, station2):
-    stations = loadStations("london_stations.csv")
-    lat1, lon1 = stations[station1]['latitude'], stations[station1]['longitude']
-    lat2, lon2 = stations[station2]['latitude'], stations[station2]['longitude']
-    
-    return distance(lat1, lon1, lat2, lon2)
-    
-def run_experiment(G):
+def heuristic(s, sNode):
+    h = {}
+    slat, slon = s[sNode]['latitude'], s[sNode]['longitude']
+    for station in s:
+        stationLat, stationLon = s[station]['latitude'], s[station]['longitude']
+        h[station] = distance(slat, slon, stationLat, stationLon)
+        
+    return h
+        
+
+#Experiment for all pairs of stations    
+def run_experiment1(spf, stations = loadStations("london_stations.csv")):
     a_star_times = []
     dijkstra_times = []
     
-    for i, source in enumerate(G.adj.keys()):
-        print(i)
-        for j, destination in enumerate(G.adj.keys()):
-            if source != destination:
-                # Measure A* algorithm time
-                start_time_astar = time.time()
-                a_star(G, source, destination, heuristic)
-                end_time_astar = time.time()
-                a_star_times[i, j] = end_time_astar - start_time_astar
+    for i in spf.graph.adj.keys():
+        s = i #chose start node
+        h = heuristic(stations, s)
+        spf.graph.set_heuristic(h)
+        
+        for j in spf.graph.adj.keys():
+            d = j #chose end node
+            
+            if i == j: continue
+                
+            start = time.time()
+            spf.set_algorithm(A_Star())
+            spf.calc_short_path(s,d)
+            a_star_times.append(time.time()-start)
+            
+            start = time.time()
+            spf.set_algorithm(Dijsktra())
+            spf.calc_short_path(s,d)
+            dijkstra_times.append(time.time()-start)
+    
+    y = numpy.arange(len(a_star_times))
+    
+    plt.scatter(y, a_star_times, label = 'a_star')
+    plt.scatter(y, dijkstra_times, label = 'dikstra')
+    
 
-                # Measure Dijkstra's algorithm time
-                start_time_dijkstra = time.time()
-                graph.dijkstra(G, source, destination)
-                end_time_dijkstra = time.time()
-                dijkstra_times[i, j] = end_time_dijkstra - start_time_dijkstra
+    plt.xlabel('Trial#') 
+    plt.ylabel('Time(s)') 
+    
+    plt.legend()
+    plt.show() 
+    
+    #return average running times
+    return sum(a_star_times)/len(a_star_times), sum(dijkstra_times)/len(dijkstra_times)
 
-    # Plot results
+#Experiment for random start and end station
+def run_experiment2(spf, stations = loadStations("london_stations.csv"), numTrials = 11):
+    a_star_times = []
+    dijkstra_times = []
+    
+    s = 1 #chose start node
+    d = 300 #chose end node
+    h = heuristic(stations, s)
+    spf.graph.set_heuristic(h)
+    
+    for _ in range(numTrials):
+        start = time.time()
+        spf.set_algorithm(A_Star())
+        spf.calc_short_path(s,d)
+        a_star_times.append(time.time()-start)
+        
+        start = time.time()
+        spf.set_algorithm(Dijsktra())
+        spf.calc_short_path(s,d)
+        dijkstra_times.append(time.time()-start)
+    
+    barWidth = 0.25
+    
+    br1 = numpy.arange(len(a_star_times))
+    br2 = [x + barWidth for x in br1]
+    
+    plt.bar(br1, a_star_times, width=barWidth, edgecolor= 'grey', label = 'a_star')
+    plt.bar(br2, dijkstra_times, width=barWidth, edgecolor= 'grey', label = 'dikstra')
+    
+
+    plt.xlabel('Trial#') 
+    plt.ylabel('Time(s)') 
+    
+    plt.legend()
+    plt.show() 
+    
+    #return average running times
+    return sum(a_star_times)/len(a_star_times), sum(dijkstra_times)/len(dijkstra_times)
+
+#Experiment for stations on the same line
+def run_experiment3(spf, stations = loadStations("london_stations.csv"), connections = loadConnections("london_connections.csv")):
+    a_star_times = []
+    dijkstra_times = []
+    
+    s = 1 #chose start node
+    line = connections[s]['line']
+    h = heuristic(stations, s)
+    spf.graph.set_heuristic(h)
+    
+    for i in spf.graph.adj.keys():
+        d = i #chose end node
+            
+        if d == s: continue
+        if connections[d]['line'] != line: continue
+                
+        start = time.time()
+        spf.set_algorithm(A_Star())
+        spf.calc_short_path(s,d)
+        a_star_times.append(time.time()-start)
+        
+        start = time.time()
+        spf.set_algorithm(Dijsktra())
+        spf.calc_short_path(s,d)
+        dijkstra_times.append(time.time()-start)
+        
+        
+    
+    barWidth = 0.25
+    
+    br1 = numpy.arange(len(a_star_times))
+    br2 = [x + barWidth for x in br1]
+    
+    plt.bar(br1, a_star_times, width=barWidth, edgecolor= 'grey', label = 'a_star')
+    plt.bar(br2, dijkstra_times, width=barWidth, edgecolor= 'grey', label = 'dikstra')
+    
+
+    plt.xlabel('Trial#') 
+    plt.ylabel('Time(s)') 
+    
+    plt.legend()
+    plt.show() 
+    
+    #return average running times
+    return sum(a_star_times)/len(a_star_times), sum(dijkstra_times)/len(dijkstra_times)
+
+
+def run_experiment4(spf, stations = loadStations("london_stations.csv")):
+    a_star_times = []
+    dijkstra_times = []
+    y_distances = []
+    
+    s = 1 #chose start node
+    h = heuristic(stations, s)
+    spf.graph.set_heuristic(h)
+    
+    for i in spf.graph.adj.keys():
+        d = i #chose end node
+        if d == s: continue
+        
+        start = time.time()
+        spf.set_algorithm(A_Star())
+        dist = spf.calc_short_path(s,d)
+        a_star_times.append(time.time()-start)
+        y_distances.append(dist[1])
+        
+        start = time.time()
+        spf.set_algorithm(Dijsktra())
+        spf.calc_short_path(s,d)
+        dijkstra_times.append(time.time()-start)
     
     
+    plt.scatter(y_distances, a_star_times, label = 'a_star')
+    plt.scatter(y_distances, dijkstra_times, label = 'dikstra')
+    
 
-s = loadStations("london_stations.csv")
-c = loadConnections("london_connections.csv")
-G = buildGraph(s,c)
-print(run_experiment(G))
+    plt.xlabel('Node Distance') 
+    plt.ylabel('Time(s)') 
+    
+    plt.legend()
+    plt.show() 
+    
+    #return average running times
+    return sum(a_star_times)/len(a_star_times), sum(dijkstra_times)/len(dijkstra_times)
+    
+    
+        
+    
+    
+    
+if __name__ == "__main__":
 
-
+    s = loadStations("london_stations.csv")
+    c = loadConnections("london_connections.csv")
+    
+    spf = ShortPathFinder()
+    
+    G = buildGraph(s,c)
+    spf.set_graph(G)
+    
+    #print(run_experiment1(spf, s)) # run experiment on all pairs of nodes
+    #print(run_experiment2(spf, s, 11)) # chose start and end node and run experiment
+    print(run_experiment3(spf, s, c)) # run experiment for start and end node on the same line
+    #print(run_experiment4(spf, s)) # run experiment comparing node distance and running time
+    
 
     
             
