@@ -15,10 +15,8 @@ def bsp_value(L, m):
             dp[i][j] = float('inf')
             for k in range(1, i+1):
                 # check distance if kth station is removed
-                dist = dp[k-1][j-1]
                 if i > k:
-                    dist = min(dist, L[i] - L[k])
-                dp[i][j] = dist
+                    dp[i][j] = min(dp[k-1][j-1], L[i] - L[k])
 
     # nswer is max of the minimum distances
     return max(dp[-1])
